@@ -10,6 +10,7 @@ namespace Cinema_Website.Models
     {
         [Key]
         public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
 
         //Navigation
         public AddingCategory AddingCategory { get; set; }
