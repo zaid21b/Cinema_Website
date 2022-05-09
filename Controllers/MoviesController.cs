@@ -61,7 +61,7 @@ namespace CinemaWebsite2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,AdminId")] Movie movie, IFormFile MovieImage, IFormFile MovieTrailer)
+        public async Task<IActionResult> Create([Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,AdminId")] Movie movie, IFormFile MovieImage)
         {
             if (MovieImage != null)
             {
@@ -72,15 +72,7 @@ namespace CinemaWebsite2.Controllers
                     movie.MovieImage = myStream.ToArray();
                 }
             }
-            if (MovieTrailer != null)
-            {
-                //This code is used to copy image to DataBase
-                using (var myStream = new MemoryStream())
-                {
-                    await MovieTrailer.CopyToAsync(myStream);
-                    movie.MovieTrailer = myStream.ToArray();
-                }
-            }
+           
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
@@ -113,11 +105,21 @@ namespace CinemaWebsite2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,AdminId")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,AdminId")] Movie movie, IFormFile MovieImage)
         {
             if (id != movie.MovieId)
             {
                 return NotFound();
+            }
+
+            if (MovieImage != null)
+            {
+                //This code is used to copy image to DataBase
+                using (var myStream = new MemoryStream())
+                {
+                    await MovieImage.CopyToAsync(myStream);
+                    movie.MovieImage = myStream.ToArray();
+                }
             }
 
             if (ModelState.IsValid)

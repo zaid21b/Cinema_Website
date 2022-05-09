@@ -13,7 +13,7 @@ namespace Cinema_Website.Models
         public string MovieName { get; set; }
         public string MovieDescription { get; set; }
         public byte[] MovieImage { get; set; }
-        public byte[] MovieTrailer { get; set; }
+        public string MovieTrailer { get; set; }
 
         //FK
         public int AdminId { get; set; }

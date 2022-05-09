@@ -32,7 +32,7 @@
             <section class="banner">
                 <div class="banner-card">
 
-                    <img src="./assets/images/John-Wick-3.jpg" class="banner-img" alt="">
+                    <img src="~/images/Avengers.jpg" class="banner-img" alt="">
 
                     <div class="card-content">
                         <div class="card-info">
@@ -56,7 +56,7 @@
 
                         </div>
 
-                        <h2 class="card-title">John Wick: Chapter 3 - Parabellum</h2>
+                        <h2 class="card-title">Avengers</h2>
                     </div>
 
                 </div>
@@ -141,9 +141,9 @@
                                             <ion-icon name="play-circle-outline"></ion-icon>
                                         </div>
                                         <div>
-                                            <video autoplay>
-                                                <source src="data:video;base64,@(Convert.ToBase64String(item.MovieTrailer))" type="video/mp4" />
-                                            </video>
+                                            <iframe autoplay
+                                                src="@item.MovieTrailer" type="video/mp4" >
+                                            </iframe>
                                         </div>
 
                                     </div>
