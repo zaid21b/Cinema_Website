@@ -9,16 +9,18 @@ using CinemaWebsite2.Data;
 using Cinema_Website.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CinemaWebsite2.Controllers
 {
     public class MoviesController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public MoviesController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public MoviesController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Movies
@@ -65,14 +67,16 @@ namespace CinemaWebsite2.Controllers
         {
             if (MovieImage != null)
             {
-                //This code is used to copy image to DataBase
-                using (var myStream = new MemoryStream())
+                string guid = Guid.NewGuid().ToString();
+                var FullFileName = $"{_webHostEnvironment.WebRootPath}\\images\\{guid}_{Path.GetFileName(MovieImage.FileName)}";
+                //This code is used to copy image to WWRoot
+                using (var myStream = new FileStream(FullFileName, FileMode.Create))
                 {
-                    await MovieImage.CopyToAsync(myStream);
-                    movie.MovieImage = myStream.ToArray();
+                    MovieImage.CopyTo(myStream);
                 }
+                movie.MovieImage = $"/images/{ guid}_{ Path.GetFileName(MovieImage.FileName)}";
             }
-           
+
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
@@ -105,22 +109,13 @@ namespace CinemaWebsite2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,AdminId")] Movie movie, IFormFile MovieImage)
+        public async Task<IActionResult> Edit(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,AdminId")] Movie movie)
         {
             if (id != movie.MovieId)
             {
                 return NotFound();
             }
 
-            if (MovieImage != null)
-            {
-                //This code is used to copy image to DataBase
-                using (var myStream = new MemoryStream())
-                {
-                    await MovieImage.CopyToAsync(myStream);
-                    movie.MovieImage = myStream.ToArray();
-                }
-            }
 
             if (ModelState.IsValid)
             {
@@ -146,6 +141,66 @@ namespace CinemaWebsite2.Controllers
             return View(movie);
         }
 
+        //GET
+        public async Task<IActionResult> EditMovieImage(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var movie = await _context.tblMovies.FindAsync(id);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+            ViewData["AdminId"] = new SelectList(_context.Set<Admin>(), "AdminId", "Email", selectedValue: movie.AdminId);
+            return View(movie);
+        }
+
+        //POST
+        [HttpPost]
+        public async Task<IActionResult> EditMovieImage(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,AdminId")] Movie movie, IFormFile MovieImage)
+        {
+            if (id != movie.MovieId)
+            {
+                return NotFound();
+            }
+
+            if (MovieImage != null)
+            {
+                string guid = Guid.NewGuid().ToString();
+                var FullFileName = $"{_webHostEnvironment.WebRootPath}\\images\\{guid}_{Path.GetFileName(MovieImage.FileName)}";
+                //This code is used to copy image to WWRoot
+                using (var myStream = new FileStream(FullFileName, FileMode.Create))
+                {
+                    MovieImage.CopyTo(myStream);
+                }
+                movie.MovieImage = $"/images/{ guid}_{ Path.GetFileName(MovieImage.FileName)}";
+            }
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(movie);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!MovieExists(movie.MovieId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Edit), new { id = movie.MovieId });
+            }
+            return View(movie);
+
+        }
         // GET: Movies/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {

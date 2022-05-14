@@ -1,48 +1,45 @@
 ﻿@model Cinema_Website.Models.Movie
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "EditMovieImage";
 }
 
-<h1>Edit</h1>
+<h1>EditMovieImage</h1>
 
 <h4>Movie</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <form asp-action="EditMovieImage" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MovieId" />
-            <div class="form-group">
+            <div class="form-group" hidden>
                 <label asp-for="MovieName" class="control-label"></label>
                 <input asp-for="MovieName" class="form-control" />
                 <span asp-validation-for="MovieName" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden>
                 <label asp-for="MovieDescription" class="control-label"></label>
                 <input asp-for="MovieDescription" class="form-control" />
                 <span asp-validation-for="MovieDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MovieImage" class="control-label"></label>
-                <input type="hidden" asp-for="MovieImage" class="form-control" />
-                <img src="@Model.MovieImage" />
+                <input asp-for="MovieImage" class="form-control" type="file"/>
                 <span asp-validation-for="MovieImage" class="text-danger"></span>
-                <a asp-action="EditMovieImage" asp-route-id="@Model.MovieId" >Edit Movie Image</a>
             </div>
-            @**<p>@ViewBag.path</p>**@
-            <div class="form-group">
+            <div class="form-group" hidden>
                 <label asp-for="MovieTrailer" class="control-label"></label>
                 <input asp-for="MovieTrailer" class="form-control" />
                 <span asp-validation-for="MovieTrailer" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden>
                 <label asp-for="AdminId" class="control-label"></label>
                 <select asp-for="AdminId" class="form-control" asp-items="ViewBag.AdminId"></select>
                 <span asp-validation-for="AdminId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" asp-route-id="@Model.MovieId" />
             </div>
         </form>
     </div>
