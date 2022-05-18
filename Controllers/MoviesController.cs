@@ -135,7 +135,7 @@ namespace CinemaWebsite2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), new { id = movie.MovieId });
             }
             ViewData["AdminId"] = new SelectList(_context.Set<Admin>(), "AdminId", "Email", movie.AdminId);
             return View(movie);
