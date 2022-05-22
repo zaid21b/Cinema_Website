@@ -39,7 +39,7 @@ namespace CinemaWebsite2.Controllers
             }
 
             var movie = await _context.tblMovies
-                .Include(m => m.Admin)
+                .Include(m => m.Admin).Include(m => m.Events).ThenInclude(e => e.Hall)
                 .FirstOrDefaultAsync(m => m.MovieId == id);
             if (movie == null)
             {
