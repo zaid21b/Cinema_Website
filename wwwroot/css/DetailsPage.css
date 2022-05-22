@@ -619,6 +619,8 @@
 
     .col-md-4 {
         width: 33.33333333%;
+        position: inherit;
+        left: 446px;
     }
 
     .col-md-3 {
