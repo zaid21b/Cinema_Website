@@ -148,7 +148,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.EventDateTime)
+                    <a asp-controller="Orders" asp-action="Create">@Html.DisplayFor(modelItem => item.EventDateTime)</a>
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Hall.HadllId)
@@ -206,5 +206,5 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.MovieId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.MovieId">Back to List</a>
 </div>

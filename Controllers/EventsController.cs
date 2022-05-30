@@ -64,8 +64,7 @@ namespace CinemaWebsite2.Controllers
         public IActionResult Create()
         {
             ViewData["HallId"] = new SelectList(_context.tblHalls, "HadllId", "HadllId");
-            ViewData["MovieId"] = new SelectList(_context.tblMovies, "MovieId", "MovieId");
-            ViewData["MovieName"] = new SelectList(_context.tblMovies, "MovieName", "MovieName");
+            ViewData["MovieId"] = new SelectList(_context.tblMovies, "MovieId", "MovieName");
 
 
 
@@ -85,13 +84,13 @@ namespace CinemaWebsite2.Controllers
             {
                 _context.Add(@event);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), "Movies", new { id = @event.MovieId });
             }
             ViewData["HallId"] = new SelectList(_context.tblHalls, "HadllId", "HadllId", @event.HallId);
             ViewData["MovieId"] = new SelectList(_context.tblMovies, "MovieId", "MovieId", @event.MovieId);
             ViewData["MovieName"] = new SelectList(_context.tblMovies, "MovieName", "MovieName", @event.Movie.MovieName);
 
-            return View(":/Movies/Details", @event);
+            return View(@event);
         }
 
 
@@ -150,7 +149,7 @@ namespace CinemaWebsite2.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details), "Movies", new { id = @event.MovieId });
             }
             ViewData["HallId"] = new SelectList(_context.tblHalls, "HadllId", "HadllId", @event.HallId);
             ViewData["MovieId"] = new SelectList(_context.tblMovies, "MovieId", "MovieId", @event.MovieId);
@@ -193,7 +192,7 @@ namespace CinemaWebsite2.Controllers
             var @event = await _context.tblEvents.FindAsync(id);
             _context.tblEvents.Remove(@event);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Details), "Movies", new { id = @event.MovieId });
         }
 
 

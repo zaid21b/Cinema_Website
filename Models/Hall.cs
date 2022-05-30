@@ -10,6 +10,8 @@ namespace Cinema_Website.Models
     {
         [Key]
         public int HadllId { get; set; }
+        [Display(Name = "Hall Number")]
+        public int HallNumber { get; set; }
 
         //Navigation
         public ICollection<Seat> Seats { get; set; }

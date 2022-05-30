@@ -10,23 +10,23 @@ using Cinema_Website.Models;
 
 namespace CinemaWebsite2.Controllers
 {
-    public class HallsController : Controller
+    public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public HallsController(ApplicationDbContext context)
+        public OrdersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Halls
+        // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.tblHalls.Include(h => h.Events);
+            var applicationDbContext = _context.tblOrders.Include(o => o.Customer);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Halls/Details/5
+        // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,39 +34,42 @@ namespace CinemaWebsite2.Controllers
                 return NotFound();
             }
 
-            var hall = await _context.tblHalls.Include(h => h.Seats).Include(h => h.Events).ThenInclude(e => e.Movie).Include(h => h.Events).ThenInclude(e => e.Tickets)
-                .FirstOrDefaultAsync(m => m.HadllId == id);
-            if (hall == null)
+            var order = await _context.tblOrders
+                .Include(o => o.Customer)
+                .FirstOrDefaultAsync(m => m.OrederId == id);
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(hall);
+            return View(order);
         }
 
-        // GET: Halls/Create
+        // GET: Orders/Create
         public IActionResult Create()
         {
+            ViewData["CustomerId"] = new SelectList(_context.tblCustomers, "CustomerId", "Email");
             return View();
         }
 
-        // POST: Halls/Create
+        // POST: Orders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HadllId,HallNumber")] Hall hall)
+        public async Task<IActionResult> Create([Bind("OrederId,NumOfTickets,CustomerId")] Order order)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(hall);
+                _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(hall);
+            ViewData["CustomerId"] = new SelectList(_context.tblCustomers, "CustomerId", "Email", order.CustomerId);
+            return View(order);
         }
 
-        // GET: Halls/Edit/5
+        // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +77,23 @@ namespace CinemaWebsite2.Controllers
                 return NotFound();
             }
 
-            var hall = await _context.tblHalls.FindAsync(id);
-            if (hall == null)
+            var order = await _context.tblOrders.FindAsync(id);
+            if (order == null)
             {
                 return NotFound();
             }
-            return View(hall);
+            ViewData["CustomerId"] = new SelectList(_context.tblCustomers, "CustomerId", "Email", order.CustomerId);
+            return View(order);
         }
 
-        // POST: Halls/Edit/5
+        // POST: Orders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HadllId,HallNumber")] Hall hall)
+        public async Task<IActionResult> Edit(int id, [Bind("OrederId,NumOfTickets,CustomerId")] Order order)
         {
-            if (id != hall.HadllId)
+            if (id != order.OrederId)
             {
                 return NotFound();
             }
@@ -98,12 +102,12 @@ namespace CinemaWebsite2.Controllers
             {
                 try
                 {
-                    _context.Update(hall);
+                    _context.Update(order);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HallExists(hall.HadllId))
+                    if (!OrderExists(order.OrederId))
                     {
                         return NotFound();
                     }
@@ -114,10 +118,12 @@ namespace CinemaWebsite2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(hall);
+            ViewData["CustomerId"] = new SelectList(_context.tblCustomers, "CustomerId", "Email", order.CustomerId);
+            return View(order);
         }
 
-        // GET: Halls/Delete/5
+
+        // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,30 +131,31 @@ namespace CinemaWebsite2.Controllers
                 return NotFound();
             }
 
-            var hall = await _context.tblHalls
-                .FirstOrDefaultAsync(m => m.HadllId == id);
-            if (hall == null)
+            var order = await _context.tblOrders
+                .Include(o => o.Customer)
+                .FirstOrDefaultAsync(m => m.OrederId == id);
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return View(hall);
+            return View(order);
         }
 
-        // POST: Halls/Delete/5
+        // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var hall = await _context.tblHalls.FindAsync(id);
-            _context.tblHalls.Remove(hall);
+            var order = await _context.tblOrders.FindAsync(id);
+            _context.tblOrders.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool HallExists(int id)
+        private bool OrderExists(int id)
         {
-            return _context.tblHalls.Any(e => e.HadllId == id);
+            return _context.tblOrders.Any(e => e.OrederId == id);
         }
     }
 }

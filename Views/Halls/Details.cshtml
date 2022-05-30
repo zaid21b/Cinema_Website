@@ -10,9 +10,78 @@
     <h4>Hall</h4>
     <hr />
     <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.HallNumber)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.HallNumber)
+        </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.HadllId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().EventDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().Movie)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Events)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventDateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Movie.MovieName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.EventId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.EventId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.EventId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Seats.FirstOrDefault().SeatT)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seats.FirstOrDefault().Screen)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Seats)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SeatT)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Screen)
+                </td>
+                
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.SeatId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.SeatId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.SeatId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using CinemaWebsite2.Data;
+using Cinema_Website.Models;
 
 namespace CinemaWebsite2.Areas.Identity.Pages.Account
 {
@@ -24,21 +26,25 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
         private readonly UserManager<CinemaWebsiteUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<CinemaWebsiteUser> userManager,
             SignInManager<CinemaWebsiteUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
-        public InputModel Input { get; set; }
+        public Customer Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -101,6 +107,9 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+
+                    _context.Add(Input);
+                    await _context.SaveChangesAsync();
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

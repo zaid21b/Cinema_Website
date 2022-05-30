@@ -4,14 +4,16 @@ using CinemaWebsite2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CinemaWebsite2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220529162526_addingOrders")]
+    partial class addingOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -165,9 +167,6 @@ namespace CinemaWebsite2.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("HallNumber")
-                        .HasColumnType("int");
-
                     b.HasKey("HadllId");
 
                     b.ToTable("tblHalls");
@@ -222,9 +221,6 @@ namespace CinemaWebsite2.Data.Migrations
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("NumOfTickets")
-                        .HasColumnType("int");
-
                     b.HasKey("OrederId");
 
                     b.HasIndex("CustomerId");
@@ -245,12 +241,18 @@ namespace CinemaWebsite2.Data.Migrations
                     b.Property<int>("Screen")
                         .HasColumnType("int");
 
-                    b.Property<int>("SeatT")
+                    b.Property<int>("SeatType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TicketId")
                         .HasColumnType("int");
 
                     b.HasKey("SeatId");
 
                     b.HasIndex("HallId");
+
+                    b.HasIndex("TicketId")
+                        .IsUnique();
 
                     b.ToTable("tblSeats");
                 });
@@ -262,7 +264,7 @@ namespace CinemaWebsite2.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EventId")
+                    b.Property<int?>("EventId")
                         .HasColumnType("int");
 
                     b.Property<int>("OrderId")
@@ -574,24 +576,28 @@ namespace CinemaWebsite2.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Cinema_Website.Models.Ticket", "Ticket")
+                        .WithOne("Seat")
+                        .HasForeignKey("Cinema_Website.Models.Seat", "TicketId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Hall");
+
+                    b.Navigation("Ticket");
                 });
 
             modelBuilder.Entity("Cinema_Website.Models.Ticket", b =>
                 {
-                    b.HasOne("Cinema_Website.Models.Event", "Event")
+                    b.HasOne("Cinema_Website.Models.Event", null)
                         .WithMany("Tickets")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EventId");
 
                     b.HasOne("Cinema_Website.Models.Order", "Order")
                         .WithMany("Tickets")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Event");
 
                     b.Navigation("Order");
                 });
@@ -684,6 +690,11 @@ namespace CinemaWebsite2.Data.Migrations
             modelBuilder.Entity("Cinema_Website.Models.Order", b =>
                 {
                     b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("Cinema_Website.Models.Ticket", b =>
+                {
+                    b.Navigation("Seat");
                 });
 
             modelBuilder.Entity("Cinema_Website.Models.ViewingMovie", b =>

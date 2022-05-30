@@ -10,23 +10,23 @@ using Cinema_Website.Models;
 
 namespace CinemaWebsite2.Controllers
 {
-    public class HallsController : Controller
+    public class TicketsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public HallsController(ApplicationDbContext context)
+        public TicketsController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Halls
+        // GET: Tickets
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.tblHalls.Include(h => h.Events);
+            var applicationDbContext = _context.tblTickets.Include(t => t.Event).Include(t => t.Order);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Halls/Details/5
+        // GET: Tickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,39 +34,45 @@ namespace CinemaWebsite2.Controllers
                 return NotFound();
             }
 
-            var hall = await _context.tblHalls.Include(h => h.Seats).Include(h => h.Events).ThenInclude(e => e.Movie).Include(h => h.Events).ThenInclude(e => e.Tickets)
-                .FirstOrDefaultAsync(m => m.HadllId == id);
-            if (hall == null)
+            var ticket = await _context.tblTickets
+                .Include(t => t.Event)
+                .Include(t => t.Order)
+                .FirstOrDefaultAsync(m => m.TicketId == id);
+            if (ticket == null)
             {
                 return NotFound();
             }
 
-            return View(hall);
+            return View(ticket);
         }
 
-        // GET: Halls/Create
+        // GET: Tickets/Create
         public IActionResult Create()
         {
+            ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId");
+            ViewData["OrderId"] = new SelectList(_context.tblOrders, "OrederId", "OrederId");
             return View();
         }
 
-        // POST: Halls/Create
+        // POST: Tickets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HadllId,HallNumber")] Hall hall)
+        public async Task<IActionResult> Create([Bind("TicketId,OrderId,EventId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(hall);
+                _context.Add(ticket);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(hall);
+            ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId", ticket.EventId);
+            ViewData["OrderId"] = new SelectList(_context.tblOrders, "OrederId", "OrederId", ticket.OrderId);
+            return View(ticket);
         }
 
-        // GET: Halls/Edit/5
+        // GET: Tickets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +80,24 @@ namespace CinemaWebsite2.Controllers
                 return NotFound();
             }
 
-            var hall = await _context.tblHalls.FindAsync(id);
-            if (hall == null)
+            var ticket = await _context.tblTickets.FindAsync(id);
+            if (ticket == null)
             {
                 return NotFound();
             }
-            return View(hall);
+            ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId", ticket.EventId);
+            ViewData["OrderId"] = new SelectList(_context.tblOrders, "OrederId", "OrederId", ticket.OrderId);
+            return View(ticket);
         }
 
-        // POST: Halls/Edit/5
+        // POST: Tickets/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HadllId,HallNumber")] Hall hall)
+        public async Task<IActionResult> Edit(int id, [Bind("TicketId,OrderId,EventId")] Ticket ticket)
         {
-            if (id != hall.HadllId)
+            if (id != ticket.TicketId)
             {
                 return NotFound();
             }
@@ -98,12 +106,12 @@ namespace CinemaWebsite2.Controllers
             {
                 try
                 {
-                    _context.Update(hall);
+                    _context.Update(ticket);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HallExists(hall.HadllId))
+                    if (!TicketExists(ticket.TicketId))
                     {
                         return NotFound();
                     }
@@ -114,10 +122,12 @@ namespace CinemaWebsite2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(hall);
+            ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId", ticket.EventId);
+            ViewData["OrderId"] = new SelectList(_context.tblOrders, "OrederId", "OrederId", ticket.OrderId);
+            return View(ticket);
         }
 
-        // GET: Halls/Delete/5
+        // GET: Tickets/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,30 +135,32 @@ namespace CinemaWebsite2.Controllers
                 return NotFound();
             }
 
-            var hall = await _context.tblHalls
-                .FirstOrDefaultAsync(m => m.HadllId == id);
-            if (hall == null)
+            var ticket = await _context.tblTickets
+                .Include(t => t.Event)
+                .Include(t => t.Order)
+                .FirstOrDefaultAsync(m => m.TicketId == id);
+            if (ticket == null)
             {
                 return NotFound();
             }
 
-            return View(hall);
+            return View(ticket);
         }
 
-        // POST: Halls/Delete/5
+        // POST: Tickets/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var hall = await _context.tblHalls.FindAsync(id);
-            _context.tblHalls.Remove(hall);
+            var ticket = await _context.tblTickets.FindAsync(id);
+            _context.tblTickets.Remove(ticket);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool HallExists(int id)
+        private bool TicketExists(int id)
         {
-            return _context.tblHalls.Any(e => e.HadllId == id);
+            return _context.tblTickets.Any(e => e.TicketId == id);
         }
     }
 }
