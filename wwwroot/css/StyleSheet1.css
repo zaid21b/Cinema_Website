@@ -1,6 +1,54 @@
-﻿.tbl-Cus.table.table-hover {
-    position: absolute;
-    left: -374px;
-    top: 498px;
-    width: 92%;
+﻿
+/*About us Page*/
+*, *:before, *:after {
+    box-sizing: inherit;
 }
+
+
+.row {
+    flex-wrap: nowrap;
+}
+
+
+.container {
+    padding: 24px 16px;
+}
+
+
+.container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+    }
+
+
+
+
+/*About Page*/
+/*.map-responsive {
+    overflow: hidden;
+    position: relative;
+}
+
+.map-responsive iframe {
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    }*/
+
+
+
+    /*Details Page*/
+    .tbl-Cus.table.table-hover {
+        position: absolute;
+        left: -374px;
+        top: 498px;
+        width: 92%;
+    }
+
+
+.img {
+    width: 360px;
+    border-style: groove;
+    }

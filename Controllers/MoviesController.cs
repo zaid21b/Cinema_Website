@@ -29,6 +29,16 @@ namespace CinemaWebsite2.Controllers
             var applicationDbContext = _context.tblMovies.Include(m => m.Admin);
             return View(await applicationDbContext.ToListAsync());
         }
+        public async Task<IActionResult> AboutUs()
+        {
+            
+            return View();
+        }
+        public async Task<IActionResult> Contact()
+        {
+
+            return View();
+        }
 
         // GET: Movies/Details/5
         public async Task<IActionResult> Details(int? id)
