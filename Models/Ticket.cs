@@ -11,12 +11,13 @@ namespace Cinema_Website.Models
     {
         [Key]
         public int TicketId { get; set; }
+        public double TicketPrice { get; set; }
+        public bool IsSelected { get; set; }
         //FK
-        public int OrderId { get; set; }
+
         public int EventId { get; set; }
         //Navigation
-        public Order Order { get; set; }
-        
+        public ICollection<OrderTicket> OrderTickets { get; set; }
         public Event Event { get; set; }
     }
 }

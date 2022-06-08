@@ -22,8 +22,8 @@ namespace CinemaWebsite2.Controllers
         // GET: Tickets
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.tblTickets.Include(t => t.Event).Include(t => t.Order);
-            return View(await applicationDbContext.ToListAsync());
+            var testGPContext = _context.tblTickets.Include(t => t.Event);
+            return View(await testGPContext.ToListAsync());
         }
 
         // GET: Tickets/Details/5
@@ -36,7 +36,6 @@ namespace CinemaWebsite2.Controllers
 
             var ticket = await _context.tblTickets
                 .Include(t => t.Event)
-                .Include(t => t.Order)
                 .FirstOrDefaultAsync(m => m.TicketId == id);
             if (ticket == null)
             {
@@ -50,7 +49,6 @@ namespace CinemaWebsite2.Controllers
         public IActionResult Create()
         {
             ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId");
-            ViewData["OrderId"] = new SelectList(_context.tblOrders, "OrederId", "OrederId");
             return View();
         }
 
@@ -59,7 +57,7 @@ namespace CinemaWebsite2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TicketId,OrderId,EventId")] Ticket ticket)
+        public async Task<IActionResult> Create([Bind("TicketId,TicketPrice,IsSelected,EventId")] Ticket ticket)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +66,6 @@ namespace CinemaWebsite2.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId", ticket.EventId);
-            ViewData["OrderId"] = new SelectList(_context.tblOrders, "OrederId", "OrederId", ticket.OrderId);
             return View(ticket);
         }
 
@@ -86,7 +83,6 @@ namespace CinemaWebsite2.Controllers
                 return NotFound();
             }
             ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId", ticket.EventId);
-            ViewData["OrderId"] = new SelectList(_context.tblOrders, "OrederId", "OrederId", ticket.OrderId);
             return View(ticket);
         }
 
@@ -95,7 +91,7 @@ namespace CinemaWebsite2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TicketId,OrderId,EventId")] Ticket ticket)
+        public async Task<IActionResult> Edit(int id, [Bind("TicketId,TicketPrice,IsSelected,EventId")] Ticket ticket)
         {
             if (id != ticket.TicketId)
             {
@@ -123,7 +119,6 @@ namespace CinemaWebsite2.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId", ticket.EventId);
-            ViewData["OrderId"] = new SelectList(_context.tblOrders, "OrederId", "OrederId", ticket.OrderId);
             return View(ticket);
         }
 
@@ -137,7 +132,6 @@ namespace CinemaWebsite2.Controllers
 
             var ticket = await _context.tblTickets
                 .Include(t => t.Event)
-                .Include(t => t.Order)
                 .FirstOrDefaultAsync(m => m.TicketId == id);
             if (ticket == null)
             {

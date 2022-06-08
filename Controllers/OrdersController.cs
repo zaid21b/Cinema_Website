@@ -20,10 +20,10 @@ namespace CinemaWebsite2.Controllers
         }
 
         // GET: Orders
+        // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.tblOrders.Include(o => o.Customer);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.tblOrders.ToListAsync());
         }
 
         // GET: Orders/Details/5
@@ -35,7 +35,6 @@ namespace CinemaWebsite2.Controllers
             }
 
             var order = await _context.tblOrders
-                .Include(o => o.Customer)
                 .FirstOrDefaultAsync(m => m.OrederId == id);
             if (order == null)
             {
@@ -46,27 +45,27 @@ namespace CinemaWebsite2.Controllers
         }
 
         // GET: Orders/Create
-        public IActionResult Create()
-        {
-            ViewData["CustomerId"] = new SelectList(_context.tblCustomers, "CustomerId", "Email");
-            return View();
-        }
+        //public IActionResult Create()
+        //{
+        //  return View();
+        //}
 
         // POST: Orders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrederId,NumOfTickets,CustomerId")] Order order)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(int EventId, int TicketId)
         {
             if (ModelState.IsValid)
             {
+                var order = new OrdersCart();
+                order.CustomerId = 1;
                 _context.Add(order);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Create), "OrderTickets", new { OrderId = order.OrederId, TicketId = TicketId, EventId = EventId });
             }
-            ViewData["CustomerId"] = new SelectList(_context.tblCustomers, "CustomerId", "Email", order.CustomerId);
-            return View(order);
+            return View(null);
         }
 
         // GET: Orders/Edit/5
@@ -82,7 +81,6 @@ namespace CinemaWebsite2.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerId"] = new SelectList(_context.tblCustomers, "CustomerId", "Email", order.CustomerId);
             return View(order);
         }
 
@@ -91,7 +89,7 @@ namespace CinemaWebsite2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("OrederId,NumOfTickets,CustomerId")] Order order)
+        public async Task<IActionResult> Edit(int id, [Bind("OrderId")] OrdersCart order)
         {
             if (id != order.OrederId)
             {
@@ -118,10 +116,8 @@ namespace CinemaWebsite2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.tblCustomers, "CustomerId", "Email", order.CustomerId);
             return View(order);
         }
-
 
         // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -132,7 +128,6 @@ namespace CinemaWebsite2.Controllers
             }
 
             var order = await _context.tblOrders
-                .Include(o => o.Customer)
                 .FirstOrDefaultAsync(m => m.OrederId == id);
             if (order == null)
             {
@@ -143,14 +138,14 @@ namespace CinemaWebsite2.Controllers
         }
 
         // POST: Orders/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var order = await _context.tblOrders.FindAsync(id);
             _context.tblOrders.Remove(order);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index), "Events");
         }
 
         private bool OrderExists(int id)

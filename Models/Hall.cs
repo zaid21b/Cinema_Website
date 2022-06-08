@@ -14,7 +14,7 @@ namespace Cinema_Website.Models
         public int HallNumber { get; set; }
 
         //Navigation
-        public ICollection<Seat> Seats { get; set; }
+        
         public ICollection<Event> Events { get; set; }
     }
 }

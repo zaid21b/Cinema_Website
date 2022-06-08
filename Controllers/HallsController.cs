@@ -22,8 +22,7 @@ namespace CinemaWebsite2.Controllers
         // GET: Halls
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.tblHalls.Include(h => h.Events);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.tblHalls.ToListAsync());
         }
 
         // GET: Halls/Details/5
@@ -34,7 +33,7 @@ namespace CinemaWebsite2.Controllers
                 return NotFound();
             }
 
-            var hall = await _context.tblHalls.Include(h => h.Seats).Include(h => h.Events).ThenInclude(e => e.Movie).Include(h => h.Events).ThenInclude(e => e.Tickets)
+            var hall = await _context.tblHalls
                 .FirstOrDefaultAsync(m => m.HadllId == id);
             if (hall == null)
             {

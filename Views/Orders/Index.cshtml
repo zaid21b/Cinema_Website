@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Cinema_Website.Models.Order>
+﻿@model IEnumerable<Cinema_Website.Models.OrdersCart>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,9 +12,7 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NumOfTickets)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Customer)
             </th>
@@ -24,9 +22,7 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumOfTickets)
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Customer.Email)
             </td>

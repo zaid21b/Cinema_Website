@@ -47,6 +47,7 @@ namespace CinemaWebsite2.Controllers
             var @event = await _context.tblEvents
             .Include(h => h.Hall)
             .Include(m => m.Movie)
+            .Include(e => e.Tickets)
             .FirstOrDefaultAsync(m => m.EventId == id);
             if (@event == null)
             {

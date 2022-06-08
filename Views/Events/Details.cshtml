@@ -5,27 +5,33 @@
 }
 
 <h1>Details</h1>
-
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/my.css" />
+    <title>Movie Seat Booking</title>
+</head>
 <div>
     <h4>Event</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.EventDateTime)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.EventDateTime)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Hall)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Hall.HadllId)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Movie)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Movie.MovieId)
         </dd>
     </dl>
@@ -34,3 +40,45 @@
     <a asp-action="Edit" asp-route-id="@Model.EventId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<ul class="showcase">
+    <li>
+        <div class="seat"></div>
+        <small>Available</small>
+    </li>
+    <li>
+        <div class="seat selected"></div>
+        <small>Selected</small>
+    </li>
+    <li>
+        <div class="seat sold"></div>
+        <small>Sold</small>
+    </li>
+</ul>
+<div class="container">
+    <div class="screen"></div>
+    <div class="row">
+        @foreach (var item in Model.Tickets)
+        {
+            if (item.IsSelected == false)
+            {
+                <a asp-controller="Orders" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat"></a>
+            }
+            else
+            {
+                <a asp-controller="Orders" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat sold"></a>
+            }
+        }
+    </div>
+</div>
+
+
+
+    <a asp-controller="OrderTickets" asp-action="Index">Finish</a>
+
+
+
+    <p class="text">
+        You have selected <span id="count">0</span> seat for a price of RS.<span id="total">0</span>
+    </p>
+

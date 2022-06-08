@@ -41,8 +41,6 @@
         text-shadow: none !important;
     }
 
-    
-
     a,
     a:visited {
         text-decoration: underline;
@@ -622,7 +620,7 @@
     .col-md-4 {
         width: 33.33333333%;
         position: inherit;
-        left: 346px;
+        left: 446px;
     }
 
     .col-md-3 {
@@ -2766,7 +2764,7 @@ tbody.collapse.in {
 }
 
 .navbar-nav {
-    margin: 7.5px 0;
+    margin: 7.5px -15px;
 }
 
     .navbar-nav > li > a {
@@ -4620,7 +4618,7 @@ table {
     margin: 0 0 1.6em;
     table-layout: fixed;
     /* Prevents HTML tables from becoming too wide */
-    width: 75%;
+    width: 100%;
 }
 
 caption,

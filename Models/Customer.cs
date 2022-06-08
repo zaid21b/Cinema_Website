@@ -32,7 +32,7 @@ namespace Cinema_Website.Models
         public string PhoneNumber { get; set; }
 
         //Navigation
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<OrdersCart> Orders { get; set; }
         public ViewingMovie ViewingMovie { get; set; }
     }
 }

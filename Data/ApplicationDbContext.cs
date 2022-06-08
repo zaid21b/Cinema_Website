@@ -22,9 +22,9 @@ namespace CinemaWebsite2.Data
         public DbSet<Cinema_Website.Models.AddingCategory> tblAddingCategories { get; set; }
         public DbSet<Cinema_Website.Models.Event> tblEvents { get; set; }
         public DbSet<Cinema_Website.Models.Hall> tblHalls { get; set; }
-        public DbSet<Cinema_Website.Models.Seat> tblSeats { get; set; }
         public DbSet<Cinema_Website.Models.Ticket> tblTickets { get; set; }
-        public DbSet<Cinema_Website.Models.Order> tblOrders { get; set; }
+        public DbSet<Cinema_Website.Models.OrdersCart> tblOrders { get; set; }
+        public DbSet<Cinema_Website.Models.OrderTicket> tblOrderTickets { get; set; }
 
         
 
