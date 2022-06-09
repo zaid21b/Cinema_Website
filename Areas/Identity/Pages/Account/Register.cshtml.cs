@@ -27,13 +27,15 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<CinemaWebsiteUser> userManager,
             SignInManager<CinemaWebsiteUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            ApplicationDbContext context
+            ApplicationDbContext context,
+            RoleManager<IdentityRole> roleManager
             )
         {
             _userManager = userManager;
@@ -41,10 +43,11 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _context = context;
+            _roleManager = roleManager;
         }
 
         [BindProperty]
-        public Customer Input { get; set; }
+        public InputModel Input { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -77,10 +80,12 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
             [Display(Name = "Confirm Password")]
             [Compare("Password", ErrorMessage = "The Password and confirmation Password do not match.")]
             public string ConfirmPassword { get; set; }
+            public string Name { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            ViewData["roles"] = _roleManager.Roles.ToList();
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -88,6 +93,7 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
+            var role = _roleManager.FindByIdAsync(Input.Name).Result;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
@@ -96,6 +102,7 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with Password.");
+                    await _userManager.AddToRoleAsync(user, role.Name);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
@@ -108,8 +115,7 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                    _context.Add(Input);
-                    await _context.SaveChangesAsync();
+                    
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -127,6 +133,7 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
                 }
             }
 
+            ViewData["roles"] = _roleManager.Roles.ToList();
             // If we got this far, something failed, redisplay form
             return Page();
         }

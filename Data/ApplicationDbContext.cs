@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Cinema_Website.Models;
 using System.Data.Entity.ModelConfiguration.Conventions;
-
+using Microsoft.AspNetCore.Identity;
 
 namespace CinemaWebsite2.Data
 {

@@ -21,7 +21,11 @@ namespace CinemaWebsite2.Areas.Identity
                         context.Configuration.GetConnectionString("CinemaWebsiteContextConnection")));
 
                 services.AddDefaultIdentity<CinemaWebsiteUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                    .AddEntityFrameworkStores<CinemaWebsiteContext>();
+                   .AddRoles<IdentityRole>().AddEntityFrameworkStores<CinemaWebsiteContext>();
+                //services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+                // .AddDefaultUI()
+                // .AddEntityFrameworkStores<CinemaWebsiteContext>()
+                // .AddDefaultTokenProviders();
             });
         }
     }

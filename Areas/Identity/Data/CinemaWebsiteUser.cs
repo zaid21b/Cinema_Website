@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using Cinema_Website.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace CinemaWebsite2.Areas.Identity.Data
@@ -17,5 +18,6 @@ namespace CinemaWebsite2.Areas.Identity.Data
         [PersonalData]
         [Column(TypeName = "nvarchar(30)")]
         public string LastName { get; set; }
+       
     }
 }
