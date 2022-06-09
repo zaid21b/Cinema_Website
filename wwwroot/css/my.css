@@ -5,9 +5,7 @@
 }
 
 body {
-    background-color: #242333;
     color: #fff;
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -99,7 +97,7 @@ body {
 }
 
 .screen {
-    background-color: #fff;
+    background-color: #183b4b;
     height: 120px;
     width: 100%;
     margin: 15px 0;

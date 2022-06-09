@@ -6,6 +6,7 @@
 }
 <head>
     <link rel="stylesheet" href="~/css/DetailsPage.css" />
+    <link rel="stylesheet" href="~/css/StyleSheet1.css" />
 </head>
 <h1>Details</h1>
 
@@ -30,18 +31,7 @@
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="movie-single-ct main-content">
                     <h1 class="bd-hd">@Model.MovieName<span>2015</span></h1>
-                    <div class="social-btn">
-                        <a href="#" class="parent-btn"><i class="ion-heart"></i> Add to Favorite</a>
-                        <div class="hover-bnt">
-                            <a href="#" class="parent-btn"><i class="ion-android-share-alt"></i>share</a>
-                            <div class="hvr-item">
-                                <a href="#" class="hvr-grow"><i class="ion-social-facebook"></i></a>
-                                <a href="#" class="hvr-grow"><i class="ion-social-twitter"></i></a>
-                                <a href="#" class="hvr-grow"><i class="ion-social-googleplus"></i></a>
-                                <a href="#" class="hvr-grow"><i class="ion-social-youtube"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                   
                     <div class="movie-rate">
                         <div class="rate">
                             <i class="ion-android-star"></i>
@@ -50,18 +40,7 @@
                                 <span class="rv">56 Reviews</span>
                             </p>
                         </div>
-                        <div class="rate-star">
-                            <p>Rate This Movie: </p>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star"></i>
-                            <i class="ion-ios-star-outline"></i>
-                        </div>
+                        
                     </div>
                     <div class="movie-tabs">
                         <div class="tabs">
@@ -98,20 +77,54 @@
                                                     <h6>MMPA Rating:</h6>
                                                     <p>PG-13</p>
                                                 </div>
-                                                <div class="sb-it">
-                                                    <h6>Plot Keywords:</h6>
-                                                    <p class="tags">
-                                                        <span class="time"><a href="#">superhero</a></span>
-                                                        <span class="time"><a href="#">marvel universe</a></span>
-                                                        <span class="time"><a href="#">comic</a></span>
-                                                        <span class="time"><a href="#">blockbuster</a></span>
-                                                        <span class="time"><a href="#">final battle</a></span>
-                                                    </p>
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <table class="table tbl-Cus table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().EventDateTime)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().HallId)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().MovieId)
+                                            </th>
+                                            <th>
+                                                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().Movie.MovieName)
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Events)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a asp-controller="Events" asp-action="Details" asp-route-id="@item.EventId">@Html.DisplayFor(modelItem => item.EventDateTime)</a>
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Hall.HadllId)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Movie.MovieId)
+                                                </td>
+                                                <td>
+                                                    @Html.DisplayFor(modelItem => item.Movie.MovieName)
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-info" asp-controller="Events" asp-action="Edit" asp-route-id="@item.EventId">Edit</a> |
+                                                    <a class="btn btn-info" asp-controller="Events" asp-action="Details" asp-route-id="@item.EventId">Details</a> |
+                                                    <a class="btn btn-info" asp-controller="Events" asp-action="Delete" asp-route-id="@item.EventId">Delete</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -126,7 +139,7 @@
 
 
 
-    <a asp-controller="Events" asp-action="Create">add event</a>
+    <a class="btn btn-info" asp-controller="Events" asp-action="Create">add event</a>
 </div>
 
 
@@ -135,49 +148,7 @@
 
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().EventDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().HallId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().MovieId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().Movie.MovieName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Events)
-        {
-            <tr>
-                <td>
-                    <a asp-controller="Events" asp-action="Details" asp-route-id="@item.EventId">@Html.DisplayFor(modelItem => item.EventDateTime)</a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Hall.HadllId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Movie.MovieId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Movie.MovieName)
-                </td>
-                <td>
-                    <a asp-controller="Events" asp-action="Edit" asp-route-id="@item.EventId">Edit</a> |
-                    <a asp-controller="Events" asp-action="Details" asp-route-id="@item.EventId">Details</a> |
-                    <a asp-controller="Events" asp-action="Delete" asp-route-id="@item.EventId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
 <div>
     <h4>Movie</h4>
     <hr />
@@ -215,6 +186,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.MovieId">Edit</a> |
-    <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.MovieId">Back to List</a>
+    <a class="btn btn-info" asp-action="Edit" asp-route-id="@Model.MovieId">Edit</a> |
+    <a class="btn btn-info" asp-controller="Movies" asp-action="Details" asp-route-id="@Model.MovieId">Back to List</a>
 </div>

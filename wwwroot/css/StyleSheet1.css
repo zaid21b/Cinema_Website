@@ -6,7 +6,7 @@
 
 
 .row {
-    flex-wrap: nowrap;
+    flex-wrap: inherit;
 }
 
 
@@ -40,12 +40,16 @@
 
 
     /*Details Page*/
-    .tbl-Cus.table.table-hover {
-        position: absolute;
-        left: -374px;
-        top: 498px;
-        width: 92%;
-    }
+.table.tbl-Cus.table-hover {
+    position: absolute;
+    left: -392px;
+    top: 379px;
+    width: 92%;
+}
+
+dl.row {
+    flex-wrap: wrap;
+}
 
 
 .img {
