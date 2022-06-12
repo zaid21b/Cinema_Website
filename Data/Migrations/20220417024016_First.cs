@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CinemaWebsite2.Data.Migrations
+namespace Cinema_Website.Data.Migrations
 {
     public partial class First : Migration
     {

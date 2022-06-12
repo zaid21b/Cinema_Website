@@ -1,6 +1,5 @@
 ﻿using System;
-using CinemaWebsite2.Data;
-using CinemaWebsite2.Areas.Identity.Data;
+using Cinema_Website.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -16,16 +15,6 @@ namespace CinemaWebsite2.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-                services.AddDbContext<CinemaWebsiteContext>(options =>
-                    options.UseSqlServer(
-                        context.Configuration.GetConnectionString("CinemaWebsiteContextConnection")));
-
-                services.AddDefaultIdentity<CinemaWebsiteUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                   .AddRoles<IdentityRole>().AddEntityFrameworkStores<CinemaWebsiteContext>();
-                //services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
-                // .AddDefaultUI()
-                // .AddEntityFrameworkStores<CinemaWebsiteContext>()
-                // .AddDefaultTokenProviders();
             });
         }
     }

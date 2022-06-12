@@ -1,4 +1,4 @@
-﻿using CinemaWebsite2.Models;
+﻿using Cinema_Website.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 
-namespace CinemaWebsite2.Controllers
+namespace Cinema_Website.Controllers
 {
     public class RoleController : Controller
     {

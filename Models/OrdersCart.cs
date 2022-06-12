@@ -11,10 +11,10 @@ namespace Cinema_Website.Models
         [Key]
         public int OrederId { get; set; }
         //FK
-        public int CustomerId { get; set; }
+        public string UserId { get; set; }
 
         //Navigation
-        public Customer Customer { get; set; }
         public ICollection<OrderTicket> OrderTickets { get; set; }
+        public CinemaWebsiteUser CinemaWebsiteUser { get; set; }
     }
 }

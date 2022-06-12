@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CinemaWebsite2.Data;
+using Cinema_Website.Data;
 using Cinema_Website.Models;
 
-namespace CinemaWebsite2.Controllers
+namespace Cinema_Website.Controllers
 {
     public class OrdersController : Controller
     {
@@ -60,7 +60,7 @@ namespace CinemaWebsite2.Controllers
             if (ModelState.IsValid)
             {
                 var order = new OrdersCart();
-                order.CustomerId = 1;
+                order.UserId = "1";
                 _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Create), "OrderTickets", new { OrderId = order.OrederId, TicketId = TicketId, EventId = EventId });

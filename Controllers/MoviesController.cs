@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CinemaWebsite2.Data;
+using Cinema_Website.Data;
 using Cinema_Website.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 
-namespace CinemaWebsite2.Controllers
+namespace Cinema_Website.Controllers
 {
     public class MoviesController : Controller
     {
