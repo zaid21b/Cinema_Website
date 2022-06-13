@@ -39,7 +39,7 @@ namespace Cinema_Website
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            
+
             services.AddControllersWithViews();
         }
 

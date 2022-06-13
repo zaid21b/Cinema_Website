@@ -7,8 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cinema_Website.Data;
 using Cinema_Website.Models;
-
-
+using Microsoft.AspNetCore.Identity;
 
 namespace Cinema_Website.Controllers
 {
@@ -35,15 +34,14 @@ namespace Cinema_Website.Controllers
 
 
         // GET: Events/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(double TotalPrice,int NumOfSelectedTickets, int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-
-
+            
             var @event = await _context.tblEvents
             .Include(h => h.Hall)
             .Include(m => m.Movie)
@@ -54,7 +52,8 @@ namespace Cinema_Website.Controllers
                 return NotFound();
             }
 
-
+            ViewData["TotalPrice"]= TotalPrice;
+            ViewData["NumOfSelectedTickets"] = NumOfSelectedTickets;
 
             return View(@event);
         }

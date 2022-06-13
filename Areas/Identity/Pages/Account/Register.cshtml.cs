@@ -6,6 +6,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Cinema_Website.Data;
 using Cinema_Website.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -25,17 +26,20 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
         private readonly UserManager<CinemaWebsiteUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _context;
 
         public RegisterModel(
             UserManager<CinemaWebsiteUser> userManager,
             SignInManager<CinemaWebsiteUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [BindProperty]
@@ -70,8 +74,8 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
             [Display(Name = "Confirm Password")]
             [Compare("Password", ErrorMessage = "The Password and confirmation Password do not match.")]
             public string ConfirmPassword { get; set; }
-           
 
+            
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -92,6 +96,10 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    OrdersCart cart = new OrdersCart();
+                    cart.UserId = user.Id;
+                    _context.tblOrders.Add(cart);
+                    await _context.SaveChangesAsync();
                     _logger.LogInformation("User created a new account with password.");
                     await _userManager.AddToRoleAsync(user, Enums.Role.Roles.Customer.ToString());
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

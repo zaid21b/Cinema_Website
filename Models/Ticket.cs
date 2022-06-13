@@ -11,6 +11,7 @@ namespace Cinema_Website.Models
     {
         [Key]
         public int TicketId { get; set; }
+        [Display(Name ="Ticket Price")]
         public double TicketPrice { get; set; }
         public bool IsSelected { get; set; }
         //FK

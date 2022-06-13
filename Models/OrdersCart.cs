@@ -12,7 +12,6 @@ namespace Cinema_Website.Models
         public int OrederId { get; set; }
         //FK
         public string UserId { get; set; }
-
         //Navigation
         public ICollection<OrderTicket> OrderTickets { get; set; }
         public CinemaWebsiteUser CinemaWebsiteUser { get; set; }

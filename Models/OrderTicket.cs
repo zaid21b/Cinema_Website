@@ -10,7 +10,6 @@ namespace Cinema_Website.Models
     {
         [Key]
         public int OrderTicketId { get; set; }
-
         //FK
         public int TicketId { get; set; }
         public int OrderId { get; set; }

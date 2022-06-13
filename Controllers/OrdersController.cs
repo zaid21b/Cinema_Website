@@ -23,6 +23,7 @@ namespace Cinema_Website.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
+            
             return View(await _context.tblOrders.ToListAsync());
         }
 
@@ -60,7 +61,7 @@ namespace Cinema_Website.Controllers
             if (ModelState.IsValid)
             {
                 var order = new OrdersCart();
-                order.UserId = "1";
+                //order.UserId = "1";
                 _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Create), "OrderTickets", new { OrderId = order.OrederId, TicketId = TicketId, EventId = EventId });

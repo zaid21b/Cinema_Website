@@ -1,7 +1,12 @@
-﻿@model Cinema_Website.Models.Event
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<CinemaWebsiteUser> SignInManager
+@inject UserManager<CinemaWebsiteUser> UserManager
+@model Cinema_Website.Models.Event
 
 @{
     ViewData["Title"] = "Details";
+    var NumOfSeats = 0;
+    var TotalPrice = 0.0;
 }
 
 <h1>Details</h1>
@@ -62,11 +67,14 @@
         {
             if (item.IsSelected == false)
             {
-                <a asp-controller="Orders" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat"></a>
+                <a asp-controller="OrderTickets" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat"></a>
+
             }
             else
             {
-                <a asp-controller="Orders" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat sold"></a>
+                <a class="seat sold"></a>
+                NumOfSeats++;
+                TotalPrice += item.TicketPrice;
             }
         }
     </div>
@@ -74,11 +82,14 @@
 
 
 
-    <a asp-controller="OrderTickets" asp-action="Index">Finish</a>
+<a asp-controller="OrderTickets" asp-action="Index">Finish</a>
 
 
-
+@foreach (var item in Model.Tickets)
+{
     <p class="text">
-        You have selected <span id="count">0</span> seat for a price of RS.<span id="total">0</span>
+        You have selected <span id="count">@ViewBag.NumOfSlectedTickets</span> seat for a price of <span id="total">@ViewBag.TotalPrice</span> JD
     </p>
+}
+
 

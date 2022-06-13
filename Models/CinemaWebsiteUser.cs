@@ -15,6 +15,8 @@ namespace Cinema_Website.Models
         [Display(Name = "Last Name")]
         [Required(ErrorMessage = "please enter your last name")]
         public string LastName { get; set; }
+        //FK
+
         //Navigation
         public OrdersCart OrdersCart { get; set; }
     }

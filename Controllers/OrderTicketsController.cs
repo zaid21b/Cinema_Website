@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cinema_Website.Data;
 using Cinema_Website.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Cinema_Website.Controllers
 {
     public class OrderTicketsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<CinemaWebsiteUser> _userManager;
 
-        public OrderTicketsController(ApplicationDbContext context)
+        public OrderTicketsController(ApplicationDbContext context, UserManager<CinemaWebsiteUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: OrderTickets
@@ -61,20 +65,23 @@ namespace Cinema_Website.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int OrderId, int TicketId, int EventId)
+        public async Task<IActionResult> Create(int TicketId, int EventId)
         {
             if (ModelState.IsValid)
             {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var OrdersCartId =  int.Parse(_context.tblOrders.Where(c => c.UserId == userId).Select(o => o.OrederId).FirstOrDefault().ToString());
+                
                 var orderticket = new OrderTicket();
                 orderticket.TicketId = TicketId;
-                orderticket.OrderId = OrderId;
+                orderticket.OrderId = OrdersCartId;
                 _context.Add(orderticket);
                 await _context.SaveChangesAsync();
                 var ticket = await _context.tblTickets.FindAsync(TicketId);
                 ticket.IsSelected = true;
                 _context.tblTickets.Update(ticket);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details), "Events", new { id = EventId });
+                return RedirectToAction(nameof(Details), "Events", new { id = EventId});
             }
             //ViewData["OrderId"] = new SelectList(_context.Order, "OrderId", "OrderId", orderticket.OrderId);
             //ViewData["TicketId"] = new SelectList(_context.Ticket, "TicketId", "TicketId", orderticket.TicketId);

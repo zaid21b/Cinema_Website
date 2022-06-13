@@ -16,12 +16,11 @@ namespace Cinema_Website.Models
         public string MovieTrailer { get; set; }
 
         //FK
-        public int AdminId { get; set; }
+        
 
         //Navigation
-        public Admin Admin { get; set; }
+        
         public ICollection<Event> Events { get; set; }
         public AddingCategory AddingCategory { get; set; }
-        public ViewingMovie ViewingMovie { get; set; }
     }
 }
