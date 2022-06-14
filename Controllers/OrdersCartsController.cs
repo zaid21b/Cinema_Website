@@ -10,11 +10,11 @@ using Cinema_Website.Models;
 
 namespace Cinema_Website.Controllers
 {
-    public class OrdersController : Controller
+    public class OrdersCartsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersCartsController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -36,6 +36,8 @@ namespace Cinema_Website.Controllers
             }
 
             var order = await _context.tblOrders
+                .Include(ot => ot.OrderTickets)
+                .ThenInclude(t => t.Ticket)
                 .FirstOrDefaultAsync(m => m.OrederId == id);
             if (order == null)
             {

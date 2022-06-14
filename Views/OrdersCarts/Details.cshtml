@@ -1,0 +1,33 @@
+﻿@model Cinema_Website.Models.OrdersCart
+
+@{
+    ViewData["Title"] = "Details";
+    int NumOfSeats = 0;
+    double TotalCost = 0.0;
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>OrdersCart</h4>
+    <hr />
+
+</div>
+
+
+@foreach (var item in Model.OrderTickets)
+{
+    <p>@item.Ticket.TicketId</p>
+    <p>@item.Ticket.TicketPrice</p>
+    NumOfSeats = NumOfSeats + 1;
+    TotalCost=TotalCost + item.Ticket.TicketPrice;
+}
+
+<h3>
+    You have selected <span>@NumOfSeats</span> seat for a price of <span>@TotalCost</span> JD
+</h3>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.OrederId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

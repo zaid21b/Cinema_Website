@@ -5,8 +5,7 @@
 
 @{
     ViewData["Title"] = "Details";
-    var NumOfSeats = 0;
-    var TotalPrice = 0.0;
+
 }
 
 <h1>Details</h1>
@@ -52,10 +51,6 @@
         <small>Available</small>
     </li>
     <li>
-        <div class="seat selected"></div>
-        <small>Selected</small>
-    </li>
-    <li>
         <div class="seat sold"></div>
         <small>Sold</small>
     </li>
@@ -73,8 +68,7 @@
             else
             {
                 <a class="seat sold"></a>
-                NumOfSeats++;
-                TotalPrice += item.TicketPrice;
+
             }
         }
     </div>
@@ -82,14 +76,11 @@
 
 
 
-<a asp-controller="OrderTickets" asp-action="Index">Finish</a>
+<a asp-controller="OrdersCarts" asp-action="Details" asp-route-id="@ViewBag.OrderId">Finish</a>
 
 
-@foreach (var item in Model.Tickets)
-{
-    <p class="text">
-        You have selected <span id="count">@ViewBag.NumOfSlectedTickets</span> seat for a price of <span id="total">@ViewBag.TotalPrice</span> JD
-    </p>
-}
+
+
+
 
 

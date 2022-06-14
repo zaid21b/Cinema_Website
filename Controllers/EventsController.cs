@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Cinema_Website.Data;
 using Cinema_Website.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Cinema_Website.Controllers
 {
@@ -36,6 +37,9 @@ namespace Cinema_Website.Controllers
         // GET: Events/Details/5
         public async Task<IActionResult> Details(double TotalPrice,int NumOfSelectedTickets, int? id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewData["OrderId"] = int.Parse(_context.tblOrders.Where(c => c.UserId == userId).Select(o => o.OrederId).FirstOrDefault().ToString());
+            
             if (id == null)
             {
                 return NotFound();
@@ -52,8 +56,7 @@ namespace Cinema_Website.Controllers
                 return NotFound();
             }
 
-            ViewData["TotalPrice"]= TotalPrice;
-            ViewData["NumOfSelectedTickets"] = NumOfSelectedTickets;
+           
 
             return View(@event);
         }

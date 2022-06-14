@@ -14,6 +14,7 @@
         <tr>
             
             
+            <th>@Model.FirstOrDefault().OrederId</th>
             <th></th>
         </tr>
     </thead>
@@ -21,7 +22,7 @@
 @foreach (var item in Model) {
         <tr>
             
-            
+            <td>@item.OrederId</td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.OrederId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.OrederId">Details</a> |

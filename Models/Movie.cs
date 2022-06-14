@@ -28,7 +28,6 @@ namespace Cinema_Website.Models
         [Required(ErrorMessage = "The Movie Description Is Required")]
         public string MovieDescription { get; set; }
         [Display(Name = "Movie Image")]
-        [Required(ErrorMessage = "The Movie Image Is Required")]
         public string MovieImage { get; set; }
         [Display(Name = "Movie Trailer")]
         [Required(ErrorMessage = "The Movie Trailer Is Required")]
