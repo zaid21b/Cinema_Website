@@ -38,6 +38,8 @@ namespace Cinema_Website.Controllers
             var order = await _context.tblOrders
                 .Include(ot => ot.OrderTickets)
                 .ThenInclude(t => t.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(m => m.Movie)
                 .FirstOrDefaultAsync(m => m.OrederId == id);
             if (order == null)
             {

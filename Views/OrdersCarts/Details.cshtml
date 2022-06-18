@@ -1,33 +1,88 @@
 ﻿@model Cinema_Website.Models.OrdersCart
-
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<CinemaWebsiteUser> SignInManager
+@inject UserManager<CinemaWebsiteUser> UserManager
 @{
     ViewData["Title"] = "Details";
     int NumOfSeats = 0;
     double TotalCost = 0.0;
 }
 
-<h1>Details</h1>
+<head>
 
-<div>
-    <h4>OrdersCart</h4>
-    <hr />
-
-</div>
+    <link rel="stylesheet" href="~/css/ticketstylesheet.css" />
+</head>
 
 
-@foreach (var item in Model.OrderTickets)
-{
-    <p>@item.Ticket.TicketId</p>
-    <p>@item.Ticket.TicketPrice</p>
-    NumOfSeats = NumOfSeats + 1;
-    TotalCost=TotalCost + item.Ticket.TicketPrice;
-}
+<body>
 
-<h3>
-    You have selected <span>@NumOfSeats</span> seat for a price of <span>@TotalCost</span> JD
-</h3>
+    <h1>Details</h1>
 
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.OrederId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <h4>OrdersCart</h4>
+        <hr />
+
+    </div>
+
+
+    @foreach (var item in Model.OrderTickets)
+    {
+
+        <div class="cardWrap">
+            <div class="card1 cardLeft">
+                <h1>Z2A<span>Cinema</span></h1>
+                <div class="title">
+                    <h2>@item.Ticket.Event.Movie.MovieName</h2>
+                    <span>movie</span>
+                </div>
+                <div class="name">
+                    <h2>@UserManager.GetUserAsync(User).Result.FirstName</h2>
+                    <span>name</span>
+                </div>
+                <div class="seat">
+                    <h2>@item.Ticket.SeatNumber</h2>
+                    <span>seat</span>
+                </div>
+                <div class="time">
+                    <h2>@item.Ticket.Event.EventDateTime</h2>
+                    <span>time</span>
+                </div>
+
+
+
+            </div>
+            <div class="card1 cardRight">
+                <div class="eye"></div>
+                <div class="number">
+                    <h3>@item.Ticket.SeatNumber</h3>
+                    <span>seat</span>
+                </div>
+                <a style="margin-top:24px ;margin-left:24px ; color : white; width:60px ;height:18px " type="submit" value="Delete" class="badge bg-warning" asp-controller="OrderTickets" asp-action="Delete" asp-route-id="@item.OrderTicketId">Delete</a>
+            </div>
+
+
+
+        </div>
+
+
+
+        NumOfSeats = NumOfSeats+1;
+        TotalCost = TotalCost + item.Ticket.TicketPrice;
+    }
+
+    <h3>
+        You have selected <span>@NumOfSeats</span> seat for a price of <span>@TotalCost</span> JD
+    </h3>
+
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.OrederId">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>
+</body>
+<script>
+
+
+    document.body.style.lineHeight = 1.3;
+
+
+</script>

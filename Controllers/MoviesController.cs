@@ -67,7 +67,7 @@ namespace Cinema_Website.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,AdminId")] Movie movie, IFormFile MovieImage)
+        public async Task<IActionResult> Create([Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MovieRating,MMPARating,ReleaseDate")] Movie movie, IFormFile MovieImage)
         {
             if (MovieImage != null)
             {
