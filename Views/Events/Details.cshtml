@@ -7,8 +7,7 @@
     ViewData["Title"] = "Details";
 
 }
-
-<h1>Details</h1>
+<hr />
 <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -16,35 +15,6 @@
     <link rel="stylesheet" href="~/css/my.css" />
     <title>Movie Seat Booking</title>
 </head>
-<div>
-    <h4>Event</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.EventDateTime)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.EventDateTime)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Hall)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Hall.HadllId)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Movie)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Movie.MovieId)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.EventId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
-
 <ul class="showcase">
     <li>
         <div class="seat"></div>
@@ -55,6 +25,7 @@
         <small>Sold</small>
     </li>
 </ul>
+<hr />
 <div class="container">
     <div class="screen"></div>
     <div class="row">
@@ -68,7 +39,6 @@
             else
             {
                 <a class="seat sold"></a>
-
             }
         }
     </div>

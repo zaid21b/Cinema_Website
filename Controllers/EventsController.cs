@@ -66,7 +66,7 @@ namespace Cinema_Website.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-            ViewData["HallId"] = new SelectList(_context.tblHalls, "HadllId", "HadllId");
+            ViewData["HallId"] = new SelectList(_context.tblHalls, "HadllId", "HallNumber");
             ViewData["MovieId"] = new SelectList(_context.tblMovies, "MovieId", "MovieName");
 
 

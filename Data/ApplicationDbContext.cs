@@ -6,6 +6,7 @@ using System.Text;
 using Cinema_Website.Models;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using Microsoft.AspNetCore.Identity;
+using CinemaWebsite2.Models;
 
 namespace Cinema_Website.Data
 {
@@ -61,7 +62,13 @@ namespace Cinema_Website.Data
                 .HasOne(b => b.OrdersCart)
                 .WithOne(i => i.CinemaWebsiteUser)
                 .HasForeignKey<OrdersCart>(b => b.UserId);
+
+            
+            
+        
+   
         }
+
 
     }
 }
