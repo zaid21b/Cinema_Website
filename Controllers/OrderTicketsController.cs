@@ -168,7 +168,10 @@ namespace Cinema_Website.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            
             var orderticket = await _context.tblOrderTickets.FindAsync(id);
+            var ticket = await _context.tblTickets.FindAsync(orderticket.TicketId);
+            ticket.IsSelected = false;
             _context.tblOrderTickets.Remove(orderticket);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
