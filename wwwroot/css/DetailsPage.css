@@ -144,8 +144,8 @@
 }
 
 .container-fluid {
-    margin-right: auto;
-    margin-left: auto;
+    /*! margin-right: auto; */
+    /*! margin-left: auto; */
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -160,6 +160,7 @@
     min-height: 1px;
     padding-left: 15px;
     padding-right: 15px;
+    /*! width: 100%; */
 }
 
 .col-xs-1, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9, .col-xs-10, .col-xs-11, .col-xs-12 {
@@ -2583,10 +2584,10 @@ tbody.collapse.in {
 }
 
 .navbar {
-    position: relative;
-    min-height: 50px;
-    margin-bottom: 20px;
-    border: 1px solid transparent;
+    /*! position: relative; */
+    /*! min-height: 50px; */
+    /*! margin-bottom: 20px; */
+    /*! border: 1px solid transparent; */
 }
 
 @media (min-width: 768px) {
@@ -2602,10 +2603,10 @@ tbody.collapse.in {
 }
 
 .navbar-collapse {
-    overflow-x: visible;
-    padding-right: 15px;
-    padding-left: 15px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    /*! overflow-x: visible; */
+    /*! padding-right: 15px; */
+    /*! padding-left: 15px; */
+    /*! box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1); */
     -webkit-overflow-scrolling: touch;
 }
 
@@ -2655,8 +2656,8 @@ tbody.collapse.in {
 .container-fluid > .navbar-header,
 .container > .navbar-collapse,
 .container-fluid > .navbar-collapse {
-    margin-right: -15px;
-    margin-left: -15px;
+    /*! margin-right: -15px; */
+    /*! margin-left: -15px; */
 }
 
 @media (min-width: 768px) {
@@ -2707,7 +2708,7 @@ tbody.collapse.in {
 }
 
 .navbar-brand {
-    float: left;
+    /*! float: left; */
     padding: 15px 15px;
     font-size: 18px;
     line-height: 20px;
@@ -2764,13 +2765,13 @@ tbody.collapse.in {
 }
 
 .navbar-nav {
-    margin: 7.5px -15px;
+    /*! margin: 7.5px -15px; */
 }
 
     .navbar-nav > li > a {
-        padding-top: 10px;
-        padding-bottom: 10px;
-        line-height: 20px;
+        /*! padding-top: 10px; */
+        /*! padding-bottom: 10px; */
+        /*! line-height: 20px; */
     }
 
 @media (max-width: 767px) {
@@ -3830,8 +3831,8 @@ button.close {
     .navbar-collapse:after,
     .modal-footer:before,
     .modal-footer:after {
-        content: " ";
-        display: table;
+        /*! content: " "; */
+        /*! display: table; */
     }
 
     .clearfix:after,
@@ -3867,8 +3868,8 @@ button.close {
     .navbar-collapse:after,
     .modal-footer:before,
     .modal-footer:after {
-        content: " ";
-        display: table;
+        /*! content: " "; */
+        /*! display: table; */
     }
 
     .clearfix:after,
@@ -4245,14 +4246,14 @@ thead,
 tr,
 th,
 td {
-    border: 0;
-    font-family: inherit;
-    font-size: 100%;
-    font-style: inherit;
-    font-weight: inherit;
-    margin: 0;
-    outline: 0;
-    padding: 0;
+    /*! border: 0; */
+    /*! font-family: inherit; */
+    /*! font-size: 100%; */
+    /*! font-style: inherit; */
+    /*! font-weight: inherit; */
+    /*! margin: 0; */
+    /*! outline: 0; */
+    /*! padding: 0; */
     vertical-align: baseline;
 }
 
@@ -4269,11 +4270,11 @@ html {
 *:before,
 *:after {
     /* apply a natural box layout model to all elements; see http://www.paulirish.com/2012/box-sizing-border-box-ftw/ */
-    -webkit-box-sizing: border-box;
+    /*! -webkit-box-sizing: border-box; */
     /* Not needed for modern webkit but still used by Blackberry Browser 7.0; see http://caniuse.com/#search=box-sizing */
-    -moz-box-sizing: border-box;
+    /*! -moz-box-sizing: border-box; */
     /* Still needed for Firefox 28; see http://caniuse.com/#search=box-sizing */
-    box-sizing: border-box;
+    /*! box-sizing: border-box; */
 }
 
 body {
@@ -4290,7 +4291,7 @@ header,
 main,
 nav,
 section {
-    display: block;
+    /*! display: block; */
 }
 
 ol,
@@ -4339,7 +4340,7 @@ a img {
 Initial Setup
 ----------------------------------------------*/
 a {
-    text-decoration: none;
+    /*! text-decoration: none; */
 }
 
 input:focus,
@@ -4427,16 +4428,16 @@ h6 {
 }
 
 a {
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-    color: #666;
-    border-bottom: 1px solid dotted;
+    /*! -webkit-transition: all 0.3s ease-out; */
+    /*! -moz-transition: all 0.3s ease-out; */
+    /*! -o-transition: all 0.3s ease-out; */
+    /*! transition: all 0.3s ease-out; */
+    /*! color: #666; */
+    /*! border-bottom: 1px solid dotted; */
 }
 
     a:hover {
-        color: #020d18;
+        color: #4774a1;
     }
 
 p {
@@ -4576,7 +4577,7 @@ hr {
 
 ul,
 ol {
-    margin: 0 0 1.6em 1.3333em;
+    /*! margin: 0 0 1.6em 1.3333em; */
 }
 
 ul {
@@ -4788,7 +4789,7 @@ p {
 
 ul {
     list-style: none;
-    margin-left: 0;
+    /*! margin-left: 0; */
 }
 /*flex box*/
 .bd-hd {
@@ -7119,7 +7120,6 @@ ul {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    
 }
 
 @media (max-width: 767px) {
@@ -9253,16 +9253,16 @@ header {
     position: absolute;
     z-index: 100;
     width: 100%;
-    background-color: transparent;
-    -webkit-transition: all 0.5s ease-out;
-    -moz-transition: all 0.5s ease-out;
+    /*! background-color: transparent; */
+    /*! -webkit-transition: all 0.5s ease-out; */
+    /*! -moz-transition: all 0.5s ease-out; */
     -o-transition: all 0.5s ease-out;
-    transition: all 0.5s ease-out;
+    /*! transition: all 0.5s ease-out; */
 }
 
 @media (max-width: 991px) {
     header {
-        background-color: #0f2133;
+        /*! background-color: #0f2133; */
     }
 }
 
@@ -9568,10 +9568,10 @@ header#headerv3-light {
     }
 
     header .navbar-collapse.collapse {
-        display: none;
-        border-top: none !important;
-        height: auto !important;
-        max-height: none !important;
+        /*! display: none; */
+        /*! border-top: none !important; */
+        /*! height: auto !important; */
+        /*! max-height: none !important; */
     }
 
     header .navbar-header {
@@ -9831,3 +9831,4 @@ footer.full-width-ft .ft-copyright {
         font-family: 'Dosis', sans-serif;
         font-weight: 700;
     }
+

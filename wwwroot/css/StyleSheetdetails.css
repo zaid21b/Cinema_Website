@@ -1,0 +1,21 @@
+﻿/*Details Page*/
+.table.tbl-Cus {
+    position: relative;
+    left: 35px;
+    top: 0px;
+    width: 70%;
+}
+
+ul.show-times {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+ul.show-times li {
+    display: table;
+    margin-bottom: 10px;
+}
+iframe {
+    width: 100%;
+}
