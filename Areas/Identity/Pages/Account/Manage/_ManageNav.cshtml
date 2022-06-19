@@ -1,4 +1,5 @@
-﻿@inject SignInManager<CinemaWebsiteUser> SignInManager
+﻿@using Cinema_Website.Models
+@inject SignInManager<CinemaWebsiteUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }

@@ -1,4 +1,4 @@
-﻿using CinemaWebsite2.Models;
+﻿using Cinema_Website.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +11,7 @@ namespace Cinema_Website.Models
     {
         [Key]
         public int EventId { get; set; }
+        [Display(Name ="Event Date & Time")]
         [DataType(DataType.DateTime,ErrorMessage ="Invalid DateTime")]
         public DateTime EventDateTime { get; set; }
 

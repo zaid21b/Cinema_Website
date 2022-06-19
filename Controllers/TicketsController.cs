@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CinemaWebsite2.Data;
+using Cinema_Website.Data;
 using Cinema_Website.Models;
 
-namespace CinemaWebsite2.Controllers
+namespace Cinema_Website.Controllers
 {
     public class TicketsController : Controller
     {
@@ -57,12 +57,23 @@ namespace CinemaWebsite2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TicketId,TicketPrice,IsSelected,EventId")] Ticket ticket)
+        public async Task<IActionResult> Create([Bind("TicketId,TicketPrice,IsSelected,EventId")] Ticket ticket,int nTicket)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(ticket);
-                await _context.SaveChangesAsync();
+                var i = 1;
+                for ( i = 1; i<=nTicket; i++) {
+                    Ticket ticket1 = new Ticket();
+                    ticket1.SeatNumber = i;
+                    ticket1.TicketPrice = ticket.TicketPrice;
+                    ticket1.IsSelected = ticket.IsSelected;
+                    ticket1.EventId = ticket.EventId;
+                    _context.Add(ticket1);
+                    await _context.SaveChangesAsync();
+                    
+                }
+               
+                
                 return RedirectToAction(nameof(Index));
             }
             ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId", ticket.EventId);

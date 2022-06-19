@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CinemaWebsite2.Data;
+using Cinema_Website.Data;
 using Cinema_Website.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 
-namespace CinemaWebsite2.Controllers
+namespace Cinema_Website.Controllers
 {
     public class MoviesController : Controller
     {
@@ -26,17 +26,14 @@ namespace CinemaWebsite2.Controllers
         // GET: Movies
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.tblMovies.Include(m => m.Admin);
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.tblMovies.ToListAsync());
         }
-        public async Task<IActionResult> AboutUs()
+        public ActionResult AboutUs()
         {
-            
             return View();
         }
-        public async Task<IActionResult> Contact()
+        public IActionResult Contact()
         {
-
             return View();
         }
 
@@ -49,7 +46,7 @@ namespace CinemaWebsite2.Controllers
             }
 
             var movie = await _context.tblMovies
-                .Include(m => m.Admin).Include(m => m.Events).ThenInclude(e => e.Hall)
+                .Include(m => m.Events).ThenInclude(e => e.Hall)
                 .FirstOrDefaultAsync(m => m.MovieId == id);
             if (movie == null)
             {
@@ -62,9 +59,6 @@ namespace CinemaWebsite2.Controllers
         // GET: Movies/Create
         public IActionResult Create()
         {
-            ViewData["AdminId"] = new SelectList(items: _context.Set<Admin>(),
-                                                 dataValueField: "AdminId",
-                                                 dataTextField: "FirstName");
             return View();
         }
 
@@ -73,7 +67,7 @@ namespace CinemaWebsite2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,AdminId")] Movie movie, IFormFile MovieImage)
+        public async Task<IActionResult> Create([Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MovieRating,MMPARating,ReleaseDate")] Movie movie, IFormFile MovieImage)
         {
             if (MovieImage != null)
             {
@@ -93,7 +87,6 @@ namespace CinemaWebsite2.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AdminId"] = new SelectList(_context.Set<Admin>(), "AdminId", "Email", movie.AdminId);
             return View(movie);
         }
 
@@ -110,7 +103,6 @@ namespace CinemaWebsite2.Controllers
             {
                 return NotFound();
             }
-            ViewData["AdminId"] = new SelectList(_context.Set<Admin>(), "AdminId", "Email", selectedValue: movie.AdminId);
             return View(movie);
         }
 
@@ -147,7 +139,6 @@ namespace CinemaWebsite2.Controllers
                 }
                 return RedirectToAction(nameof(Details), new { id = movie.MovieId });
             }
-            ViewData["AdminId"] = new SelectList(_context.Set<Admin>(), "AdminId", "Email", movie.AdminId);
             return View(movie);
         }
 
@@ -164,7 +155,6 @@ namespace CinemaWebsite2.Controllers
             {
                 return NotFound();
             }
-            ViewData["AdminId"] = new SelectList(_context.Set<Admin>(), "AdminId", "Email", selectedValue: movie.AdminId);
             return View(movie);
         }
 
@@ -220,7 +210,6 @@ namespace CinemaWebsite2.Controllers
             }
 
             var movie = await _context.tblMovies
-                .Include(m => m.Admin)
                 .FirstOrDefaultAsync(m => m.MovieId == id);
             if (movie == null)
             {

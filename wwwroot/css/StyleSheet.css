@@ -268,7 +268,7 @@ input ~ .checked-radio-bg {
    * variable for changing position and size
    * besed on radio checked
    */
-    --width: 85px;
+    --width: 105px;
     --left: 5px;
     background: var(--oxford-blue);
     position: absolute;
@@ -279,13 +279,10 @@ input ~ .checked-radio-bg {
     border-radius: 10px;
 }
 
-#popular:checked ~ .checked-radio-bg {
-    --width: 73px;
-    --left: 90px;
-}
+
 
 #newest:checked ~ .checked-radio-bg {
-    --width: 81px;
+    --width: 105px;
     --left: 163px;
 }
 

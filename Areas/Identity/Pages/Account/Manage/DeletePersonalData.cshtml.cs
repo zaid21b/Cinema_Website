@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using CinemaWebsite2.Areas.Identity.Data;
+using Cinema_Website.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -62,7 +62,7 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account.Manage
             {
                 if (!await _userManager.CheckPasswordAsync(user, Input.Password))
                 {
-                    ModelState.AddModelError(string.Empty, "Incorrect Password.");
+                    ModelState.AddModelError(string.Empty, "Incorrect password.");
                     return Page();
                 }
             }

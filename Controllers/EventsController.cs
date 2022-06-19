@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using CinemaWebsite2.Data;
+using Cinema_Website.Data;
 using Cinema_Website.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
-
-
-namespace CinemaWebsite2.Controllers
+namespace Cinema_Website.Controllers
 {
     public class EventsController : Controller
     {
@@ -35,15 +35,17 @@ namespace CinemaWebsite2.Controllers
 
 
         // GET: Events/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(double TotalPrice,int NumOfSelectedTickets, int? id)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewData["OrderId"] = int.Parse(_context.tblOrders.Where(c => c.UserId == userId).Select(o => o.OrederId).FirstOrDefault().ToString());
+            
             if (id == null)
             {
                 return NotFound();
             }
 
-
-
+            
             var @event = await _context.tblEvents
             .Include(h => h.Hall)
             .Include(m => m.Movie)
@@ -54,7 +56,7 @@ namespace CinemaWebsite2.Controllers
                 return NotFound();
             }
 
-
+           
 
             return View(@event);
         }
@@ -64,7 +66,7 @@ namespace CinemaWebsite2.Controllers
         // GET: Events/Create
         public IActionResult Create()
         {
-            ViewData["HallId"] = new SelectList(_context.tblHalls, "HadllId", "HadllId");
+            ViewData["HallId"] = new SelectList(_context.tblHalls, "HadllId", "HallNumber");
             ViewData["MovieId"] = new SelectList(_context.tblMovies, "MovieId", "MovieName");
 
 

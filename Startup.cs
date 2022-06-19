@@ -1,4 +1,5 @@
-using CinemaWebsite2.Data;
+using Cinema_Website.Data;
+using Cinema_Website.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CinemaWebsite2
+namespace Cinema_Website
 {
     public class Startup
     {
@@ -30,9 +31,15 @@ namespace CinemaWebsite2
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<CinemaWebsiteUser, IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultUI()
+                    .AddDefaultTokenProviders();
+
+            services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            
+
             services.AddControllersWithViews();
         }
 

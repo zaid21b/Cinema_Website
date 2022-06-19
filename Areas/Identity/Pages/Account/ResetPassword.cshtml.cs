@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Cinema_Website.Models;
 using Microsoft.AspNetCore.Authorization;
-using CinemaWebsite2.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -38,8 +38,8 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm Password")]
-            [Compare("Password", ErrorMessage = "The Password and confirmation Password do not match.")]
+            [Display(Name = "Confirm password")]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
 
             public string Code { get; set; }
@@ -49,7 +49,7 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
         {
             if (code == null)
             {
-                return BadRequest("A code must be supplied for Password reset.");
+                return BadRequest("A code must be supplied for password reset.");
             }
             else
             {
