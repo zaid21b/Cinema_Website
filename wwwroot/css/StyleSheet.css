@@ -283,7 +283,7 @@ input ~ .checked-radio-bg {
 
 #newest:checked ~ .checked-radio-bg {
     --width: 105px;
-    --left: 163px;
+    --left: 110px;
 }
 
 
@@ -964,7 +964,6 @@ li {
 
 a {
     text-decoration: none;
-    display: block;
     color: var(--off-white);
 }
 

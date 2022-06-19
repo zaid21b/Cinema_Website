@@ -9,7 +9,7 @@
 </head>
 
 <body>
-
+    <br />
     <!--
       - main container
     -->
@@ -69,15 +69,18 @@
                   - filter bar
                 -->
                 <div class="filter-bar">
+                    <h1 id="S">
+                        Showing Now
+                    </h1>
                     <div class="filter-radios">
 
-                        <input type="radio" name="grade" id="featured" checked>
-                        <label for="featured">Showing Now</label>
+                        <input type="radio" name="grade" id="featured">
+                        <label for="featured"><a href="#S">Showing Now</a></label>
 
                         <input type="radio" name="grade" id="newest">
-                        <label for="newest">Coming Soon</label>
+                        <label for="newest"><a href="#C">Coming Soon</a></label>
 
-                        <div class="checked-radio-bg"></div>
+
 
                     </div>
 
@@ -88,35 +91,94 @@
                   - movies grid
                 -->
                 <div class="banner">
-                    <a asp-action="Create" class="btn btn-info">Create New</a>
+                    <a asp-action="Create" class="btn btn-info">Add New Movie</a>
                 </div>
 
                 <div class="movies-grid">
                     @foreach (var item in Model)
                     {
+                        if (((int)item.SH) == 0)
+                        {
 
-                        <form>
-                            <button type="submit" asp-controller="Movies" asp-action="Details" asp-route-id="@item.MovieId">
-                                <div class="movie-card">
 
-                                    <div class="card-head">
-                                        <img src="@item.MovieImage" />
-                                    </div>
+                            <form>
+                                <button type="submit" asp-controller="Movies" asp-action="Details" asp-route-id="@item.MovieId">
+                                    <div class="movie-card">
 
-                                    <div class="card-body">
-                                        <h3 class="card-title">@item.MovieName</h3>
+                                        <div class="card-head">
+                                            <img src="@item.MovieImage" />
+                                        </div>
 
-                                        <div class="card-info">
-                                            <span class="genre">@item.Generes</span>
-                                            <span class="year">@item.ReleaseDate</span>
+                                        <div class="card-body">
+                                            <h3 class="card-title">@item.MovieName</h3>
+
                                         </div>
                                     </div>
-                                </div>
-                            </button>
-                        </form>
+                                </button>
+                            </form>
 
 
+                        }
 
+                    }
+                </div>
+
+            </section>
+            <section class="movies">
+
+                <!--
+                  - filter bar
+                -->
+                <div class="filter-bar">
+                    <h1 id="C">
+                        Coming Soon
+                    </h1>
+                    <div class="filter-radios">
+
+                        <input href="#S" type="radio" name="grade" id="featured">
+                        <label for="featured"><a href="#S">Showing Now</a></label>
+
+                        <input type="radio" name="grade" id="newest">
+                        <label for="newest"><a href="#C">Coming Soon</a></label>
+
+
+                    </div>
+
+
+                </div>
+
+                <div class="banner">
+                    <a asp-action="Create" class="btn btn-info">Add New Movie</a>
+                </div>
+                <!--
+                  - movies grid
+                -->
+
+                <div class="movies-grid">
+                    @foreach (var item in Model)
+                    {
+                        if (((int)item.SH) == 1)
+                        {
+
+
+                            <form>
+                                <button type="submit" asp-controller="Movies" asp-action="Details" asp-route-id="@item.MovieId">
+                                    <div class="movie-card">
+
+                                        <div class="card-head">
+                                            <img src="@item.MovieImage" />
+                                        </div>
+
+                                        <div class="card-body">
+                                            <h3 class="card-title">@item.MovieName</h3>
+
+                                        </div>
+                                    </div>
+                                </button>
+                            </form>
+
+
+                        }
 
                     }
                 </div>

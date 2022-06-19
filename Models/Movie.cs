@@ -10,14 +10,22 @@ namespace Cinema_Website.Models
     {
         public enum MMPARatings
         {
-
+            [Display(Name = "PG - 9")]
             PG_9,
+            [Display(Name = "PG - 13")]
             PG_13,
+            [Display(Name = "PG - 18")]
             PG_18
 
         }
 
-
+        public enum Showing
+        {
+            [Display(Name ="Showing Now")]
+            Showing_Now = 0,
+            [Display(Name = "Coming Soon")]
+            Coming_Soon = 1
+        }
 
         [Key]
         public int MovieId { get; set; }
@@ -47,11 +55,12 @@ namespace Cinema_Website.Models
         [Display(Name = "Movie Rating")]
         [Required(ErrorMessage = "The Movie Rating Is Required")]
         public Double MovieRating { get; set; }
-
+        [Display(Name ="When Is It Showing ?")]
+        [Required()]
+        public Showing SH { get; set; } = Showing.Showing_Now;
         //FK
 
         //Navigation
         public ICollection<Event> Events { get; set; }
-        public AddingCategory AddingCategory { get; set; }
     }
 }

@@ -59,14 +59,13 @@
             </div>
             <div class="col-md-8 col-sm-12 col-xs-12">
                 <div class="movie-single-ct main-content">
-                    <h1 class="bd-hd">@Model.MovieName<span>2015</span></h1>
+                    <h1 class="bd-hd">@Model.MovieName</h1>
 
                     <div class="movie-rate">
                         <div class="rate">
                             <i class="ion-android-star"></i>
                             <p>
-                                <span>8.1</span> /10<br>
-                                <span class="rv">56 Reviews</span>
+                                <span>@Model.MovieRating</span> /10<br>
                             </p>
                         </div>
 
@@ -100,7 +99,7 @@
                                                 </div>
                                                 <div class="sb-it">
                                                     <h6>Release Date:</h6>
-                                                    <p>@Model.ReleaseDate.Date</p>
+                                                    <p>@Model.ReleaseDate.Day / @Model.ReleaseDate.Month / @Model.ReleaseDate.Year</p>
                                                 </div>
                                                 <div class="sb-it">
                                                     <h6>Run Time:</h6>
