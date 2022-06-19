@@ -28,11 +28,11 @@ namespace Cinema_Website.Controllers
         {
             return View(await _context.tblMovies.ToListAsync());
         }
-        public ActionResult AboutUs()
+        public IActionResult AboutUs()
         {
             return View();
         }
-        public IActionResult Contact()
+        public IActionResult Privacy()
         {
             return View();
         }
@@ -67,7 +67,7 @@ namespace Cinema_Website.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MovieRating,MMPARating,ReleaseDate")] Movie movie, IFormFile MovieImage)
+        public async Task<IActionResult> Create([Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MovieRating,MMPARating,ReleaseDate,SH")] Movie movie, IFormFile MovieImage)
         {
             if (MovieImage != null)
             {
@@ -111,7 +111,7 @@ namespace Cinema_Website.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,AdminId")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MovieRating,MMPARating,ReleaseDate,SH")] Movie movie)
         {
             if (id != movie.MovieId)
             {
@@ -160,7 +160,7 @@ namespace Cinema_Website.Controllers
 
         //POST
         [HttpPost]
-        public async Task<IActionResult> EditMovieImage(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,AdminId")] Movie movie, IFormFile MovieImage)
+        public async Task<IActionResult> EditMovieImage(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MovieRating,MMPARating,ReleaseDate,SH")] Movie movie, IFormFile MovieImage)
         {
             if (id != movie.MovieId)
             {

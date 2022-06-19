@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="MovieDescription" class="control-label"></label>
-                <input asp-for="MovieDescription" class="form-control" />
+                <textarea asp-for="MovieDescription" class="form-control" ></textarea>
                 <span asp-validation-for="MovieDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -31,9 +31,9 @@
                 <input type="hidden" asp-for="MovieImage" class="form-control" />
                 <img class="img" src="@Model.MovieImage" />
                 <span asp-validation-for="MovieImage" class="text-danger"></span>
-                <a asp-action="EditMovieImage" asp-route-id="@Model.MovieId">Edit Movie Image</a>
+                <br /><br />
+                <a class="btn btn-primary btn-sm" asp-action="EditMovieImage" asp-route-id="@Model.MovieId">Edit Movie Image</a>
             </div>
-            @**<p>@ViewBag.path</p>**@
             <div class="form-group">
                 <label asp-for="MovieTrailer" class="control-label"></label>
                 <input asp-for="MovieTrailer" class="form-control" />
@@ -66,15 +66,19 @@
                 <span asp-validation-for="ReleaseDate" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="SH" class="control-label"></label>
+                <select asp-for="SH" class="form-control" asp-items="@Html.GetEnumSelectList<Cinema_Website.Models.Movie.Showing>()"></select>
+                <span asp-validation-for="SH" class="text-danger"></span>
+
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.MovieId" class="btn btn-primary">Back</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.MovieId">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
