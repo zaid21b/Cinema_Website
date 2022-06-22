@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -26,9 +26,9 @@
             </td>
             
             <td>
-                <a asp-action="Edit" asp-route-id="@item.HadllId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.HadllId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.HadllId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.HadllId" class="btn btn-primary btn-sm">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.HadllId" class="btn btn-primary btn-sm">Details</a> 
+                <a asp-action="Delete" asp-route-id="@item.HadllId" class="btn btn-primary btn-sm">Delete</a>
             </td>
         </tr>
 }

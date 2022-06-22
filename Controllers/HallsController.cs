@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cinema_Website.Data;
 using Cinema_Website.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cinema_Website.Controllers
 {
@@ -19,12 +20,14 @@ namespace Cinema_Website.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Halls
         public async Task<IActionResult> Index()
         {
             return View(await _context.tblHalls.ToListAsync());
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Halls/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -42,13 +45,13 @@ namespace Cinema_Website.Controllers
 
             return View(hall);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Halls/Create
         public IActionResult Create()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Halls/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -64,7 +67,7 @@ namespace Cinema_Website.Controllers
             }
             return View(hall);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Halls/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -80,7 +83,7 @@ namespace Cinema_Website.Controllers
             }
             return View(hall);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Halls/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -115,7 +118,7 @@ namespace Cinema_Website.Controllers
             }
             return View(hall);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Halls/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -133,7 +136,7 @@ namespace Cinema_Website.Controllers
 
             return View(hall);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Halls/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

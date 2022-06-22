@@ -10,6 +10,8 @@ using Cinema_Website.Models;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Cinema_Website.Controllers
 {
@@ -28,6 +30,9 @@ namespace Cinema_Website.Controllers
         {
             return View(await _context.tblMovies.ToListAsync());
         }
+
+        
+
         public IActionResult AboutUs()
         {
             return View();
@@ -55,13 +60,13 @@ namespace Cinema_Website.Controllers
 
             return View(movie);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Movies/Create
         public IActionResult Create()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Movies/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -89,7 +94,7 @@ namespace Cinema_Website.Controllers
             }
             return View(movie);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Movies/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -105,7 +110,7 @@ namespace Cinema_Website.Controllers
             }
             return View(movie);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Movies/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -141,7 +146,7 @@ namespace Cinema_Website.Controllers
             }
             return View(movie);
         }
-
+        [Authorize(Roles = "Admin")]
         //GET
         public async Task<IActionResult> EditMovieImage(int? id)
         {
@@ -157,7 +162,7 @@ namespace Cinema_Website.Controllers
             }
             return View(movie);
         }
-
+        [Authorize(Roles = "Admin")]
         //POST
         [HttpPost]
         public async Task<IActionResult> EditMovieImage(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MovieRating,MMPARating,ReleaseDate,SH")] Movie movie, IFormFile MovieImage)
@@ -201,6 +206,7 @@ namespace Cinema_Website.Controllers
             return View(movie);
 
         }
+        [Authorize(Roles = "Admin")]
         // GET: Movies/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -218,7 +224,7 @@ namespace Cinema_Website.Controllers
 
             return View(movie);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Movies/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -180,7 +180,7 @@
 
     .banner-card .card-info ion-icon {
         font-size: 20px;
-        color: var(--azure);
+        color: #26A4D1;
         margin-right: 5px;
     }
 
@@ -611,8 +611,8 @@ footer {
 }
 
 .footer-brand {
-    max-width: 250px;
-    margin-right: 130px;
+    max-width: initial;
+    margin-top: 10px;
 }
 
 .footer-logo {
@@ -967,20 +967,6 @@ a {
     color: var(--off-white);
 }
 
-/**
- * change default scrollbar style
- */
-
-::-webkit-scrollbar {
-    background: transparent;
-    border-left: 1px solid var(--oxford-blue);
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--light-azure);
-    border-radius: 5em;
-    border: 3px solid var(--rich-black-fogra-29);
-}
 
 :root {
     /**

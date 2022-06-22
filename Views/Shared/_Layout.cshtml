@@ -4,7 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Z2A</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/solar/bootstrap.min.css" /></head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/solar/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/footer.css" />
+</head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -25,8 +27,34 @@
                         <li class="nav-item">
                             <a class="nav-link active" asp-area="" asp-controller="Movies" asp-action="Privacy">Privacy Policy</a>
                         </li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            if (UserManager.GetUserAsync(User).Result.Email == "admin@gmail.com")
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link active" asp-controller="UserRoles" asp-action="Index">Manage User Roles</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" asp-controller="RoleManager" asp-action="Index">Manage Roles</a>
+                                </li>
+                            }
 
+
+
+                        }
                         <partial name="_LoginPartial" />
+
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            if (UserManager.GetUserAsync(User).Result.Email != "admin@gmail.com")
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link active" asp-controller="OrdersCarts" asp-action="PassData"><img src="~/images/cart.ico" /></a>
+                                </li>
+                            }
+                        }
+
                     </ul>
                 </div>
             </div>
@@ -39,9 +67,38 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - CinemaWebsite2 - <a asp-area="" asp-controller="Movies" asp-action="Privacy">Privacy</a>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div>
+                    <p class="slogan">
+                        Book Your Favorite Movie To Watch NOW !
+                    </p>
+                </div>
+                <div class="social-link">
+
+                    <a href="#">
+                        <ion-icon name="logo-facebook"></ion-icon>
+                    </a>
+                    <a href="#">
+                        <ion-icon name="logo-twitter"></ion-icon>
+                    </a>
+                    <a href="#">
+                        <ion-icon name="logo-instagram"></ion-icon>
+                    </a>
+                    <a href="#">
+                        <ion-icon name="logo-tiktok"></ion-icon>
+                    </a>
+                    <a href="#">
+                        <ion-icon name="logo-youtube"></ion-icon>
+                    </a>
+
+                </div>
+                <div class="container">
+                    &copy; 2022 - CinemaWebsite2 - <a asp-area="" asp-controller="Movies" asp-action="Privacy">Privacy</a>
+                </div>
+            </div>
         </div>
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

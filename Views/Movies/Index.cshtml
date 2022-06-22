@@ -5,7 +5,7 @@
 }
 
 <head>
-    <link rel="stylesheet" href="~/css/StyleSheet.css" />
+    <link rel="stylesheet" href="~/css/HomeStyleSheet.css" />
 </head>
 
 <body>
@@ -46,7 +46,6 @@
                                 <span>2h 11m</span>
                             </div>
 
-                            <div class="quality">4K</div>
 
                         </div>
 
@@ -56,10 +55,6 @@
                 </div>
             </section>
 
-
-
-
-
             <!--
               - #MOVIES SECTION
             -->
@@ -68,8 +63,8 @@
                 <!--
                   - filter bar
                 -->
-                <div class="filter-bar">
-                    <h1 id="S">
+                <div class="filter-bar" id="S">
+                    <h1 >
                         Showing Now
                     </h1>
                     <div class="filter-radios">
@@ -90,10 +85,15 @@
                 <!--
                   - movies grid
                 -->
-                <div class="banner">
-                    <a asp-action="Create" class="btn btn-info">Add New Movie</a>
-                </div>
-
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    if (UserManager.GetUserAsync(User).Result.Email == "admin@gmail.com")
+                    {
+                        <div class="banner">
+                            <a asp-action="Create" class="btn btn-primary">Add New Movie</a>
+                        </div>
+                    }
+                }
                 <div class="movies-grid">
                     @foreach (var item in Model)
                     {
@@ -101,12 +101,12 @@
                         {
 
 
-                            <form>
-                                <button type="submit" asp-controller="Movies" asp-action="Details" asp-route-id="@item.MovieId">
-                                    <div class="movie-card">
+                            <form asp-controller="Movies" asp-action="Details" asp-route-id="@item.MovieId">
+                                <button type="submit">
+                                    <div class="movie-card banner-card">
 
                                         <div class="card-head">
-                                            <img src="@item.MovieImage" />
+                                            <img src="@item.MovieImage" class="banner-img"/>
                                         </div>
 
                                         <div class="card-body">
@@ -129,8 +129,8 @@
                 <!--
                   - filter bar
                 -->
-                <div class="filter-bar">
-                    <h1 id="C">
+                <div class="filter-bar" id="C">
+                    <h1 >
                         Coming Soon
                     </h1>
                     <div class="filter-radios">
@@ -147,9 +147,15 @@
 
                 </div>
 
-                <div class="banner">
-                    <a asp-action="Create" class="btn btn-info">Add New Movie</a>
-                </div>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    if (UserManager.GetUserAsync(User).Result.Email == "admin@gmail.com")
+                    {
+                        <div class="banner">
+                            <a asp-action="Create" class="btn btn-primary">Add New Movie</a>
+                        </div>
+                    }
+                }
                 <!--
                   - movies grid
                 -->
@@ -161,12 +167,12 @@
                         {
 
 
-                            <form>
-                                <button type="submit" asp-controller="Movies" asp-action="Details" asp-route-id="@item.MovieId">
-                                    <div class="movie-card">
+                            <form asp-controller="Movies" asp-action="Details" asp-route-id="@item.MovieId">
+                                <button type="submit">
+                                    <div class="movie-card banner-card">
 
                                         <div class="card-head">
-                                            <img src="@item.MovieImage" />
+                                            <img src="@item.MovieImage" class="banner-img"/>
                                         </div>
 
                                         <div class="card-body">
@@ -186,46 +192,7 @@
             </section>
 
         </main>
-        <hr />
-        <!--
-          - FOOTER SECTION
-        -->
-        <footer>
-
-            <div class="footer-content">
-
-                <div class="footer-brand">
-                    <p class="slogan">
-                        Book Your Favorite Movie To Watch NOW !
-                    </p>
-
-                    <div class="social-link">
-
-                        <a href="#">
-                            <ion-icon name="logo-facebook"></ion-icon>
-                        </a>
-                        <a href="#">
-                            <ion-icon name="logo-twitter"></ion-icon>
-                        </a>
-                        <a href="#">
-                            <ion-icon name="logo-instagram"></ion-icon>
-                        </a>
-                        <a href="#">
-                            <ion-icon name="logo-tiktok"></ion-icon>
-                        </a>
-                        <a href="#">
-                            <ion-icon name="logo-youtube"></ion-icon>
-                        </a>
-
-                    </div>
-                </div>
-
-
-
-
-            </div>
-
-        </footer>
+       
 
     </div>
 

@@ -8,42 +8,59 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<head>
+    <link rel="stylesheet" href="~/css/ticketstylesheet.css" />
+</head>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ticket)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Order)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            if (item.OrderId == UserManager.GetUserAsync(User).Result.OrdersCart.OrederId)
-            {
-                <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Ticket.TicketId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Order.OrederId)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.OrderTicketId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.OrderTicketId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.OrderTicketId">Delete</a>
-                </td>
-            </tr>
-            }
-        }
-    </tbody>
-</table>
+<h2>Orders</h2>
+<hr />
+
+@foreach (var item in Model)
+{
+
+    <div class="cardWrap">
+        <div class="card1 cardLeft">
+            <h1>Z2A<span>Cinema</span></h1>
+            <div class="title">
+                <h2>@item.Ticket.Event.Movie.MovieName</h2>
+                <span>movie</span>
+            </div>
+            <div class="name">
+                <h2>@UserManager.GetUserAsync(User).Result.FirstName</h2>
+                <span>name</span>
+            </div>
+            <div class="seat">
+                <h2>@item.Ticket.Event.Hall.HallNumber</h2>
+                <span>Hall</span>
+            </div>
+            <div class="time">
+                <h2>@item.Ticket.Event.EventDateTime</h2>
+                <span>time</span>
+            </div>
+
+
+
+        </div>
+        <div class="card1 cardRight">
+            <div class="eye"></div>
+            <div class="number">
+                <h3>@item.Ticket.SeatNumber</h3>
+                <span>seat</span>
+            </div>
+            <a style="margin-top:24px ;margin-left:24px ; color : white; width:60px ;height:18px " type="submit" value="Delete" class="badge bg-warning" asp-controller="OrderTickets" asp-action="Delete" asp-route-id="@item.OrderTicketId">Delete</a>
+        </div>
+
+
+
+    </div>
+
+
+}
+
+<script>
+
+
+    document.body.style.lineHeight = 1.3;
+
+
+</script>

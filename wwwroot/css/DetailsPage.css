@@ -41,6 +41,10 @@
         text-shadow: none !important;
     }
 
+    logut{
+        font-size:1.5rem;
+    }
+
     a,
     a:visited {
         text-decoration: underline;
@@ -2811,8 +2815,7 @@ tbody.collapse.in {
         }
 
             .navbar-nav > li > a {
-                padding-top: 15px;
-                padding-bottom: 15px;
+                
             }
 }
 
@@ -2929,18 +2932,15 @@ tbody.collapse.in {
 }
 
 .navbar-btn {
-    margin-top: 8px;
-    margin-bottom: 8px;
+    
 }
 
     .navbar-btn.btn-sm {
-        margin-top: 10px;
-        margin-bottom: 10px;
+       
     }
 
     .navbar-btn.btn-xs {
-        margin-top: 14px;
-        margin-bottom: 14px;
+        
     }
 
 .navbar-text {
@@ -3466,12 +3466,10 @@ button.close {
 }
 
     .modal-footer .btn + .btn {
-        margin-left: 5px;
         margin-bottom: 0;
     }
 
     .modal-footer .btn-group .btn + .btn {
-        margin-left: -1px;
     }
 
     .modal-footer .btn-block + .btn-block {
@@ -4279,6 +4277,7 @@ html {
 
 body {
     overflow-x: hidden;
+    background-color: #020d18;
 }
 
 article,
@@ -4387,8 +4386,7 @@ button,
 input,
 select,
 textarea {
-    font-family: 'OpenSans', sans-serif;
-    line-height: 1.5;
+    
 }
 
 h1,
@@ -4779,12 +4777,12 @@ select {
 }
 
 p {
-    font-family: 'Nunito', sans-serif;
-    font-size: 14px;
+    
+    
     color: #abb7c4;
     font-weight: 300;
     text-transform: none;
-    line-height: 24px !important;
+    
 }
 
 ul {
@@ -4910,10 +4908,10 @@ ul {
     text-transform: uppercase;
 }
 
-.movie-items .movie-item .title-in p {
+/*.movie-items .movie-item .title-in p {
     font-size: 12px;
     color: #ffffff;
-}
+}*/
 
     .movie-items .movie-item .title-in p i {
         color: #f5b50a;
@@ -5127,9 +5125,9 @@ ul {
         font-weight: 400;
     }
 
-.movie-item-style-2 .mv-item-infor p {
+/*.movie-item-style-2 .mv-item-infor p {
     margin-bottom: 0;
-}
+}*/
 
     .movie-item-style-2 .mv-item-infor p a {
         color: #4280bf;
@@ -5660,13 +5658,15 @@ ul {
         .tabs ul.tab-links li a:hover,
         .tabs ul.tab-links-2 li a:hover,
         .tabs ul.tab-links-3 li a:hover {
-            color: #dcf836;
+            color: #b58900 ;
         }
+
+
 
     .tabs ul.tab-links li.active a,
     .tabs ul.tab-links-2 li.active a,
     .tabs ul.tab-links-3 li.active a {
-        color: #dcf836;
+        color: #b58900 ;
     }
 
 .tabs ul.tab-links-3 {
@@ -5732,7 +5732,8 @@ ul {
 
 .tabs ul.tabs-mv li.active a,
 .tabs ul.tabs-mv li:hover a {
-    border-bottom: 3px solid #dcf836;
+    border-bottom: 3px solid #b58900 ;
+    ;
 }
 
 .tabs ul.tabs-series li {
@@ -5788,13 +5789,13 @@ ul {
     margin-bottom: 0;
 }
 
-.trailers .trailer-infor p {
+/*.trailers .trailer-infor p {
     font-family: 'Dosis', sans-serif;
     font-size: 12px;
     color: #abb7c4;
     font-weight: 300;
     text-transform: uppercase;
-}
+}*/
 
 .trailers .videos {
     display: flex;
@@ -7091,7 +7092,6 @@ ul {
 .movie-single .movie-img .movie-btn,
 .movie-single .mv-ceb .movie-btn {
     text-align: center;
-    padding: 18px;
     display: flex;
     flex-direction: column;
     background-color: #07101a;
@@ -7101,6 +7101,7 @@ ul {
     .movie-single .movie-img .movie-btn a,
     .movie-single .mv-ceb .movie-btn a {
         height: 45px;
+        width: 300px;
     }
 
     .movie-single .movie-img .movie-btn .btn-transform.red,
@@ -7188,13 +7189,13 @@ ul {
     margin-bottom: 0;
 }
 
-@media (max-width: 767px) {
+/*@media (max-width: 767px) {
     .movie-single .movie-single-ct .movie-rate .rate-star p {
         font-size: 16px;
         margin-right: 0;
         margin-top: -60px;
     }
-}
+}*/
 
 .movie-single .movie-single-ct .movie-rate .rate-star i {
     font-size: 36px;

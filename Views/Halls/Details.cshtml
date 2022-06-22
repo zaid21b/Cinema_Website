@@ -19,38 +19,8 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.HadllId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.HadllId" class="btn btn-primary">Edit</a> |
+    <a asp-action="Index" class="btn btn-primary">Back</a>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().EventDateTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Events.FirstOrDefault().Movie)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Events)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EventDateTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Movie.MovieName)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.EventId">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.EventId">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.EventId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+
 

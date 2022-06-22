@@ -17,8 +17,6 @@ namespace Cinema_Website.Data
         {
         }
         public DbSet<Cinema_Website.Models.Movie> tblMovies { get; set; }
-        public DbSet<Cinema_Website.Models.Category> tblCategories { get; set; }
-        public DbSet<Cinema_Website.Models.AddingCategory> tblAddingCategories { get; set; }
         public DbSet<Cinema_Website.Models.Event> tblEvents { get; set; }
         public DbSet<Cinema_Website.Models.Hall> tblHalls { get; set; }
         public DbSet<Cinema_Website.Models.Ticket> tblTickets { get; set; }

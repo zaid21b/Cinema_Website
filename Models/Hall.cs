@@ -11,6 +11,7 @@ namespace Cinema_Website.Models
         [Key]
         public int HadllId { get; set; }
         [Display(Name = "Hall Number")]
+        [Range(maximum:10000000000000000,minimum:1,ErrorMessage ="The Hall Number Should Be Positive")]
         public int HallNumber { get; set; }
 
         //Navigation

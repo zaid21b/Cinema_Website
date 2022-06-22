@@ -9,20 +9,18 @@
 }
 
 <head>
-
     <link rel="stylesheet" href="~/css/ticketstylesheet.css" />
 </head>
 
 
 <body>
 
-    <h1>Details</h1>
 
-    <div>
-        <h4>OrdersCart</h4>
-        <hr />
+    <br />
+    <h2>Cart</h2>
+    <hr />
 
-    </div>
+
 
 
     @foreach (var item in Model.OrderTickets)
@@ -40,8 +38,8 @@
                     <span>name</span>
                 </div>
                 <div class="seat">
-                    <h2>@item.Ticket.SeatNumber</h2>
-                    <span>seat</span>
+                    <h2>@item.Ticket.Event.Hall.HallNumber</h2>
+                    <span>Hall</span>
                 </div>
                 <div class="time">
                     <h2>@item.Ticket.Event.EventDateTime</h2>
@@ -66,18 +64,15 @@
 
 
 
-        NumOfSeats = NumOfSeats+1;
+        NumOfSeats = NumOfSeats + 1;
         TotalCost = TotalCost + item.Ticket.TicketPrice;
     }
 
     <h3>
-        You have selected <span>@NumOfSeats</span> seat for a price of <span>@TotalCost</span> JD
+        You have booked <span>@NumOfSeats</span> tickets for a price of <span>@TotalCost</span> JD
     </h3>
 
-    <div>
-        <a asp-action="Edit" asp-route-id="@Model.OrederId">Edit</a> |
-        <a asp-action="Index">Back to List</a>
-    </div>
+
 </body>
 <script>
 

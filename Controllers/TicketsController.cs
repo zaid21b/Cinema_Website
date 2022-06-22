@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cinema_Website.Data;
 using Cinema_Website.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cinema_Website.Controllers
 {
@@ -19,6 +20,7 @@ namespace Cinema_Website.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Tickets
         public async Task<IActionResult> Index()
         {
@@ -26,6 +28,7 @@ namespace Cinema_Website.Controllers
             return View(await testGPContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Tickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -45,19 +48,22 @@ namespace Cinema_Website.Controllers
             return View(ticket);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Tickets/Create
-        public IActionResult Create()
+        public IActionResult Create(int EventId,int MovieId)
         {
-            ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId");
+            ViewData["EventId"] = EventId;
+            ViewData["MovieId"] = MovieId;
+            
             return View();
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Tickets/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TicketId,TicketPrice,IsSelected,EventId")] Ticket ticket,int nTicket)
+        public async Task<IActionResult> Create([Bind("TicketId,TicketPrice,IsSelected,EventId")] Ticket ticket,int nTicket,int MovieId)
         {
             if (ModelState.IsValid)
             {
@@ -74,12 +80,13 @@ namespace Cinema_Website.Controllers
                 }
                
                 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Details),"Movies",new {id =  MovieId});
             }
             ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId", ticket.EventId);
             return View(ticket);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Tickets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -96,7 +103,7 @@ namespace Cinema_Website.Controllers
             ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId", ticket.EventId);
             return View(ticket);
         }
-
+        [Authorize(Roles = "Admin")]
         // POST: Tickets/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

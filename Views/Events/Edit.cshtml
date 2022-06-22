@@ -19,12 +19,12 @@
                 <span asp-validation-for="EventDateTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HallId" class="control-label"></label>
+                <label asp-for="Hall.HallNumber" class="control-label"></label>
                 <select asp-for="HallId" class="form-control" asp-items="ViewBag.HallId"></select>
                 <span asp-validation-for="HallId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MovieId" class="control-label"></label>
+                <label asp-for="Movie.MovieName" class="control-label"></label>
                 <select asp-for="MovieId" class="form-control" asp-items="ViewBag.MovieId"></select>
                 <span asp-validation-for="MovieId" class="text-danger"></span>
             </div>

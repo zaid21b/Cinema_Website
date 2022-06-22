@@ -9,6 +9,7 @@ using Cinema_Website.Data;
 using Cinema_Website.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cinema_Website.Controllers
 {
@@ -24,7 +25,7 @@ namespace Cinema_Website.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         // GET: Events
         public async Task<IActionResult> Index()
         {
@@ -33,7 +34,7 @@ namespace Cinema_Website.Controllers
         }
 
 
-
+        [Authorize(Roles = "Customer,Admin")]
         // GET: Events/Details/5
         public async Task<IActionResult> Details(double TotalPrice,int NumOfSelectedTickets, int? id)
         {
@@ -62,7 +63,7 @@ namespace Cinema_Website.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         // GET: Events/Create
         public IActionResult Create()
         {
@@ -75,7 +76,7 @@ namespace Cinema_Website.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         // POST: Events/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -87,7 +88,7 @@ namespace Cinema_Website.Controllers
             {
                 _context.Add(@event);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details), "Movies", new { id = @event.MovieId });
+                return RedirectToAction(nameof(Create), "Tickets", new { EventId = @event.EventId, MovieId = @event.MovieId });
             }
             ViewData["HallId"] = new SelectList(_context.tblHalls, "HadllId", "HadllId", @event.HallId);
             ViewData["MovieId"] = new SelectList(_context.tblMovies, "MovieId", "MovieId", @event.MovieId);
@@ -97,7 +98,7 @@ namespace Cinema_Website.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         // GET: Events/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -113,13 +114,13 @@ namespace Cinema_Website.Controllers
             {
                 return NotFound();
             }
-            ViewData["HallId"] = new SelectList(_context.tblHalls, "HadllId", "HadllId", @event.HallId);
-            ViewData["MovieId"] = new SelectList(_context.tblMovies, "MovieId", "MovieId", @event.MovieId);
+            ViewData["HallId"] = new SelectList(_context.tblHalls, "HadllId", "HallNumber", @event.HallId);
+            ViewData["MovieId"] = new SelectList(_context.tblMovies, "MovieId", "MovieName", @event.MovieId);
             return View(@event);
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         // POST: Events/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -160,7 +161,7 @@ namespace Cinema_Website.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         // GET: Events/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -186,7 +187,7 @@ namespace Cinema_Website.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         // POST: Events/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

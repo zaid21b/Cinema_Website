@@ -9,6 +9,7 @@ using Cinema_Website.Data;
 using Cinema_Website.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Cinema_Website.Controllers
 {
@@ -23,13 +24,21 @@ namespace Cinema_Website.Controllers
             _userManager = userManager;
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: OrderTickets
         public async Task<IActionResult> Index()
         {
-            var testGPContext = _context.tblOrderTickets.Include(o => o.Order).Include(o => o.Ticket);
+            var testGPContext = _context.tblOrderTickets.Include(o => o.Order)
+                .Include(t => t.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(m => m.Movie)
+                .Include(t => t.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(h => h.Hall);
             return View(await testGPContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: OrderTickets/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -49,6 +58,8 @@ namespace Cinema_Website.Controllers
 
             return View(orderticket);
         }
+
+
 
         // GET: OrderTickets/Create
         //public IActionResult Create(int OrderId,int TicketId)
@@ -70,8 +81,8 @@ namespace Cinema_Website.Controllers
             if (ModelState.IsValid)
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var OrdersCartId =  int.Parse(_context.tblOrders.Where(c => c.UserId == userId).Select(o => o.OrederId).FirstOrDefault().ToString());
-                
+                var OrdersCartId = int.Parse(_context.tblOrders.Where(c => c.UserId == userId).Select(o => o.OrederId).FirstOrDefault().ToString());
+
                 var orderticket = new OrderTicket();
                 orderticket.TicketId = TicketId;
                 orderticket.OrderId = OrdersCartId;
@@ -81,13 +92,14 @@ namespace Cinema_Website.Controllers
                 ticket.IsSelected = true;
                 _context.tblTickets.Update(ticket);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Details), "Events", new { id = EventId});
+                return RedirectToAction(nameof(Details), "Events", new { id = EventId });
             }
             //ViewData["OrderId"] = new SelectList(_context.Order, "OrderId", "OrderId", orderticket.OrderId);
             //ViewData["TicketId"] = new SelectList(_context.Ticket, "TicketId", "TicketId", orderticket.TicketId);
             return View(null);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: OrderTickets/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -106,6 +118,7 @@ namespace Cinema_Website.Controllers
             return View(orderticket);
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: OrderTickets/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -154,6 +167,8 @@ namespace Cinema_Website.Controllers
             var orderticket = await _context.tblOrderTickets
                 .Include(o => o.Order)
                 .Include(o => o.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(m => m.Movie)
                 .FirstOrDefaultAsync(m => m.OrderTicketId == id);
             if (orderticket == null)
             {
@@ -168,13 +183,24 @@ namespace Cinema_Website.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var OrdersCartId = int.Parse(_context.tblOrders.Where(c => c.UserId == userId).Select(o => o.OrederId).FirstOrDefault().ToString());
+
+
             var orderticket = await _context.tblOrderTickets.FindAsync(id);
             var ticket = await _context.tblTickets.FindAsync(orderticket.TicketId);
             ticket.IsSelected = false;
             _context.tblOrderTickets.Remove(orderticket);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            if (userEmail == "admin@gmail.com")
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction(nameof(Details), "OrdersCarts", new { id = OrdersCartId });
+            }
         }
 
         private bool OrderTicketExists(int id)

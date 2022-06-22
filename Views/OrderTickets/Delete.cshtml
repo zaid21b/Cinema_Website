@@ -4,30 +4,71 @@
     ViewData["Title"] = "Delete";
 }
 
-<h1>Delete</h1>
+<head>
+    <link rel="stylesheet" href="~/css/ticketstylesheet.css" />
+</head>
+
+
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>OrderTicket</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ticket)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ticket.TicketId)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Order)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Order.OrederId)
-        </dd class>
-    </dl>
-    
+    <div class="cardWrap">
+        <div class="card1 cardLeft">
+            <h1>Z2A<span>Cinema</span></h1>
+            <div class="title">
+                <h2>@Model.Ticket.Event.Movie.MovieName</h2>
+                <span>movie</span>
+            </div>
+            <div class="name">
+                <h2>@UserManager.GetUserAsync(User).Result.FirstName</h2>
+                <span>name</span>
+            </div>
+            <div class="seat">
+                <h2>@Model.Ticket.SeatNumber</h2>
+                <span>seat</span>
+            </div>
+            <div class="time">
+                <h2>@Model.Ticket.Event.EventDateTime</h2>
+                <span>time</span>
+            </div>
+
+
+
+        </div>
+        <div class="card1 cardRight">
+            <div class="eye"></div>
+            <div class="number">
+                <h3>@Model.Ticket.SeatNumber</h3>
+                <span>seat</span>
+            </div>
+        </div>
+
+
+
+    </div>
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="OrderTicketId" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        @if (SignInManager.IsSignedIn(User))
+        {
+            if (UserManager.GetUserAsync(User).Result.Email == "admin@gmail.com")
+            {
+                <a asp-controller="OrderTickets" asp-action="Index" class="btn btn-danger">Back</a>
+            }
+            else
+            {
+                <a asp-controller="OrdersCarts" asp-action="Details" asp-route-id="@Model.Order.OrederId" class="btn btn-danger">Back</a>
+            }
+        }
     </form>
 </div>
+
+<script>
+
+
+    document.body.style.lineHeight = 1.3;
+
+
+</script>

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Cinema_Website.Data;
 using Cinema_Website.Models;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Cinema_Website.Controllers
 {
@@ -19,12 +21,20 @@ namespace Cinema_Website.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Orders
         // GET: Orders
         public async Task<IActionResult> Index()
         {
             
             return View(await _context.tblOrders.ToListAsync());
+        }
+
+        public IActionResult PassData()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var OrdersCartId = int.Parse(_context.tblOrders.Where(c => c.UserId == userId).Select(o => o.OrederId).FirstOrDefault().ToString());
+            return RedirectToAction("Details",new {id = OrdersCartId });
         }
 
         // GET: Orders/Details/5
@@ -40,6 +50,10 @@ namespace Cinema_Website.Controllers
                 .ThenInclude(t => t.Ticket)
                 .ThenInclude(e => e.Event)
                 .ThenInclude(m => m.Movie)
+                .Include(ot => ot.OrderTickets)
+                .ThenInclude(t => t.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(h => h.Hall)
                 .FirstOrDefaultAsync(m => m.OrederId == id);
             if (order == null)
             {
@@ -73,6 +87,7 @@ namespace Cinema_Website.Controllers
             return View(null);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Orders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -89,6 +104,7 @@ namespace Cinema_Website.Controllers
             return View(order);
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: Orders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -124,6 +140,7 @@ namespace Cinema_Website.Controllers
             return View(order);
         }
 
+        [Authorize(Roles = "Admin")]
         // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -142,6 +159,7 @@ namespace Cinema_Website.Controllers
             return View(order);
         }
 
+        [Authorize(Roles = "Admin")]
         // POST: Orders/Delete/5
         //[HttpPost, ActionName("Delete")]
         //[ValidateAntiForgeryToken]
