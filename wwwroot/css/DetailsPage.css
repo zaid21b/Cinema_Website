@@ -4644,7 +4644,7 @@ td {
 img {
     -ms-interpolation-mode: bicubic;
     border: 0;
-    width: 300px;
+    
     max-width: 100%;
     vertical-align: middle;
 }
