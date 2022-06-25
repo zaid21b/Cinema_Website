@@ -72,6 +72,7 @@
 .container {
     max-width: 1440px;
     margin: auto;
+    text-align:center
 }
 
 
@@ -390,9 +391,7 @@ input ~ .checked-radio-bg {
         margin-bottom: 5px;
     }
 
-    .movie-card:hover .card-title {
-        color: var(--light-azure);
-    }
+   
 
     .movie-card .card-info {
         display: flex;
@@ -602,38 +601,16 @@ footer {
     padding: 80px var(--px) 40px;
 }
 
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    border-bottom: 1px solid var(--oxford-blue-50);
-    padding-bottom: 80px;
-}
 
-.footer-brand {
-    max-width: initial;
-    margin-top: 10px;
-}
 
-.footer-logo {
-    width: 100px;
-    margin-bottom: 30px;
-}
 
-.slogan {
-    font-size: var(--fs-sm);
-    line-height: 20px;
-    margin-bottom: 20px;
-}
 
-.social-link a {
-    display: inline-block;
-}
 
-.social-link ion-icon {
-    font-size: 25px;
-    margin-right: 20px;
-}
+
+
+
+
+
 
 .footer-links {
     width: 100%;
@@ -698,7 +675,7 @@ ul .link-item:not(:last-child) {
    */
 
     header {
-        position: fixed;
+        position: relative;
         top: 0;
         left: 0;
         width: 100%;
@@ -714,7 +691,7 @@ ul .link-item:not(:last-child) {
    * small screen menu button style
    */
 
-    
+
 
     /**
    * BANNER SECTION RESPONSIVE
@@ -809,7 +786,7 @@ ul .link-item:not(:last-child) {
    */
 
     .banner {
-        display: none;
+        display: block;
     }
 
 
@@ -861,7 +838,7 @@ ul .link-item:not(:last-child) {
         --fs-lg: 20px;
     }
 
-    
+
 
     /**
    * FOOTER SECTION RISPONSIVE
@@ -884,13 +861,13 @@ ul .link-item:not(:last-child) {
     transition: all 0.5s ease;
 }
 
-/**
+    /**
  * more-intuitive box-sizing model.
  */
 
-*, *::before, *::after {
-    box-sizing: border-box;
-}
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
 
 /**
  * Default font-family
@@ -914,7 +891,6 @@ h1, h2, h3, h4, h5, h6 {
  */
 
 body {
-    
     -webkit-font-smoothing: antialiased;
 }
 
@@ -995,4 +971,3 @@ a {
     --fs-sm: 14px;
     --fs-x-sm: 12px;
 }
-    

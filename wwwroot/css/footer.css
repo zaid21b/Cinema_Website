@@ -32,3 +32,9 @@
 .footer-brand {
     margin-right: 0;
 }
+@media (min-width: 992px) {
+    .navbar-nav.ms-auto {
+        position: absolute;
+        left: 1213px;
+    }
+}

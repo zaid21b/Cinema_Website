@@ -4644,7 +4644,7 @@ td {
 img {
     -ms-interpolation-mode: bicubic;
     border: 0;
-    height: auto;
+    width: 300px;
     max-width: 100%;
     vertical-align: middle;
 }
@@ -7094,14 +7094,13 @@ ul {
     text-align: center;
     display: flex;
     flex-direction: column;
-    background-color: #07101a;
-    border: 3px solid #0c1c2c;
+    
 }
 
     .movie-single .movie-img .movie-btn a,
     .movie-single .mv-ceb .movie-btn a {
-        height: 45px;
-        width: 300px;
+        height: 100%;
+        width: 100%
     }
 
     .movie-single .movie-img .movie-btn .btn-transform.red,
