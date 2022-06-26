@@ -63,23 +63,42 @@ namespace Cinema_Website.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TicketId,TicketPrice,IsSelected,EventId")] Ticket ticket,int nTicket,int MovieId)
+        public async Task<IActionResult> Create([Bind("TicketId,TicketPrice,IsSelected,EventId,TicketType")] Ticket ticket,int nTicket,int MovieId,int ncoolplusTicket , int priceTicket)
         {
             if (ModelState.IsValid)
             {
                 var i = 1;
-                for ( i = 1; i<=nTicket; i++) {
-                    Ticket ticket1 = new Ticket();
-                    ticket1.SeatNumber = i;
-                    ticket1.TicketPrice = ticket.TicketPrice;
-                    ticket1.IsSelected = ticket.IsSelected;
-                    ticket1.EventId = ticket.EventId;
-                    _context.Add(ticket1);
-                    await _context.SaveChangesAsync();
-                    
+                for (i = 1; i <= nTicket; i++)
+                {
+                    if (i <= ncoolplusTicket)
+                    {
+                        Ticket ticket1 = new Ticket();
+                        ticket1.SeatNumber = i;
+                        ticket1.TicketPrice = priceTicket;
+                        ticket1.IsSelected = ticket.IsSelected;
+                        ticket1.EventId = ticket.EventId;
+                        ticket1.TicketType = Ticket.TicketTypes.coolplus;
+                        ticket1.IsSold = ticket.IsSold;
+                        _context.Add(ticket1);
+                        await _context.SaveChangesAsync();
+
+
+                    }
+                    else
+                    {
+                        Ticket ticket1 = new Ticket();
+                        ticket1.SeatNumber = i;
+                        ticket1.TicketPrice = ticket.TicketPrice;
+                        ticket1.IsSelected = ticket.IsSelected;
+                        ticket1.EventId = ticket.EventId;
+                        ticket1.TicketType = Ticket.TicketTypes.cool;
+                        ticket1.IsSold = ticket.IsSold;
+                        _context.Add(ticket1);
+                        await _context.SaveChangesAsync();
+                    }
                 }
-               
-                
+
+
                 return RedirectToAction(nameof(Details),"Movies",new {id =  MovieId});
             }
             ViewData["EventId"] = new SelectList(_context.tblEvents, "EventId", "EventId", ticket.EventId);

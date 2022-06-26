@@ -4,14 +4,16 @@ using Cinema_Website.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cinema_Website.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220625173307_deletingMovieRating")]
+    partial class deletingMovieRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -152,6 +154,7 @@ namespace Cinema_Website.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MovieImage")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MovieName")
@@ -231,17 +234,11 @@ namespace Cinema_Website.Data.Migrations
                     b.Property<bool>("IsSelected")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsSold")
-                        .HasColumnType("bit");
-
                     b.Property<int>("SeatNumber")
                         .HasColumnType("int");
 
                     b.Property<double>("TicketPrice")
                         .HasColumnType("float");
-
-                    b.Property<int>("TicketType")
-                        .HasColumnType("int");
 
                     b.HasKey("TicketId");
 

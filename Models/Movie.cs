@@ -38,7 +38,7 @@ namespace Cinema_Website.Models
         [Display(Name = "Movie Image")]
         public string MovieImage { get; set; }
         [Display(Name = "Movie Trailer")]
-        [Required(ErrorMessage = "The Movie Trailer Is Required")]
+        [Required(ErrorMessage = "The Movie Trailer Link Is Required")]
         public string MovieTrailer { get; set; }
         [Display(Name = "Movie Geners")]
         [Required(ErrorMessage = "The Movie Generes Is Required")]
@@ -49,12 +49,9 @@ namespace Cinema_Website.Models
         [Display(Name = "Run Time")]
         [Required(ErrorMessage = "The Run Time Is Required")]
         public String RunTime { get; set; }
-        [Display(Name = "MMMP Rating")]
+        [Display(Name = "MMP Rating")]
         [Required(ErrorMessage = "The MMP Rating Is Required")]
         public MMPARatings MMPARating { get; set; }
-        [Display(Name = "Movie Rating")]
-        [Required(ErrorMessage = "The Movie Rating Is Required")]
-        public Double MovieRating { get; set; }
         [Display(Name ="When Is It Showing ?")]
         [Required()]
         public Showing SH { get; set; } = Showing.Showing_Now;

@@ -72,7 +72,7 @@ namespace Cinema_Website.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MovieRating,MMPARating,ReleaseDate,SH")] Movie movie, IFormFile MovieImage)
+        public async Task<IActionResult> Create([Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MMPARating,ReleaseDate,SH")] Movie movie, IFormFile MovieImage)
         {
             if (MovieImage != null)
             {
@@ -116,7 +116,7 @@ namespace Cinema_Website.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MovieRating,MMPARating,ReleaseDate,SH")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MMPARating,ReleaseDate,SH")] Movie movie)
         {
             if (id != movie.MovieId)
             {
@@ -165,7 +165,7 @@ namespace Cinema_Website.Controllers
         [Authorize(Roles = "Admin")]
         //POST
         [HttpPost]
-        public async Task<IActionResult> EditMovieImage(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MovieRating,MMPARating,ReleaseDate,SH")] Movie movie, IFormFile MovieImage)
+        public async Task<IActionResult> EditMovieImage(int id, [Bind("MovieId,MovieName,MovieDescription,MovieImage,MovieTrailer,Generes,RunTime,MMPARating,ReleaseDate,SH")] Movie movie, IFormFile MovieImage)
         {
             if (id != movie.MovieId)
             {

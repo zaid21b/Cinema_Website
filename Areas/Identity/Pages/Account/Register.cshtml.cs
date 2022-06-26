@@ -57,14 +57,15 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
             [Display(Name = "Last Name")]
             [Required(ErrorMessage = "please enter your last name")]
             public string LastName { get; set; }
-            [Required]
+            [Required(ErrorMessage ="Please Enter an email")]
             [EmailAddress(ErrorMessage = "Invalid Email Address")]
             [Display(Name = "Email")]
             public string Email { get; set; }
+            [Required(ErrorMessage ="Please Enter a Phone Number")]
             [DataType(DataType.PhoneNumber, ErrorMessage = "Invalid Phone Number")]
             public string PhoneNumber { get; set; }
 
-            [Required]
+            [Required(ErrorMessage ="Please Enter a Password")]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]

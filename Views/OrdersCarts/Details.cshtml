@@ -6,6 +6,8 @@
     ViewData["Title"] = "Details";
     int NumOfSeats = 0;
     double TotalCost = 0.0;
+    double buynowprice = 0.0;
+    double priceindollar = 0.0;
 }
 
 <head>
@@ -17,7 +19,9 @@
 
 
     <br />
-    <h2>Cart</h2>
+    <div class="card border-primary mb-3" style="max-width: 20rem;margin-left:380px;margin-top:30px;text-align:center">
+        <div class="card-header text-light">Cart</div>
+    </div>
     <hr />
 
 
@@ -61,16 +65,23 @@
 
 
         </div>
-
+        if(item.Ticket.IsSold == false)
+        {
+            buynowprice += item.Ticket.TicketPrice;
+        }
 
 
         NumOfSeats = NumOfSeats + 1;
         TotalCost = TotalCost + item.Ticket.TicketPrice;
     }
 
-    <h3>
-        You have booked <span>@NumOfSeats</span> tickets for a price of <span>@TotalCost</span> JD
-    </h3>
+<div class="card border-primary mb-3" style="max-width: 50rem; margin-left:160px">
+    <div class="card-header">receipt</div>
+    <div class="card-body">
+
+        <h2 class="card-text text-light">you have selectet <span> @NumOfSeats</span> seat <br />for a price of <span> @TotalCost</span> jd <span><br />the buy now price is <span>@buynowprice</span> JD </span></h2>
+    </div>
+</div>
 
 
 </body>
@@ -81,3 +92,70 @@
 
 
 </script>
+
+@{ 
+    priceindollar = buynowprice * 1.41;
+}
+
+<div id="smart-button-container">
+    <div style="text-align: center;">
+        <div id="paypal-button-container"></div>
+    </div>
+</div>
+<script src="https://www.paypal.com/sdk/js?client-id=AZeCuz-kuZ237yIbbHZIZBFoSeQUu71Pnptsmf56jlmIrHINtr8-JoSQCXo47tK4J8ChuPQSdQjfjpuq&enable-funding=venmo&currency=USD&disable-funding=credit,card&locale=en_JO" data-sdk-integration-source="button-factory"></script>
+<script>
+    function initPayPalButton() {
+        paypal.Buttons({
+
+            style: {
+
+                shape: 'pill',
+                color: 'gold',
+                layout: 'vertical',
+                label: 'buynow',
+
+            },
+
+            createOrder: function (data, actions) {
+                return actions.order.create({
+                    purchase_units: [{ "amount": { "currency_code": "USD", "value": @priceindollar } }]
+                });
+            },
+
+            onApprove: function (data, actions) {
+                return actions.order.capture().then(function (orderData) {
+
+                    $.ajax({
+                        url: "/OrdersCarts/SetIsSold",
+                        type: "post",
+                        data: { id:@Model.OrederId}
+                    })
+
+
+                    // Full available details
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                    // Show a success message within this page, e.g.
+                    const element = document.getElementById('paypal-button-container');
+                    element.innerHTML = '';
+                    element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+                    // Or go to another URL:  actions.redirect('thank_you.html');
+                    return "redirect:/Movies";
+
+
+
+
+                });
+            },
+
+            onError: function (err) {
+                console.log(err);
+
+            }
+        }).render('#paypal-button-container');
+    }
+    initPayPalButton();
+</script>
+
+

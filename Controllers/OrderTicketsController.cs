@@ -94,8 +94,6 @@ namespace Cinema_Website.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Details), "Events", new { id = EventId });
             }
-            //ViewData["OrderId"] = new SelectList(_context.Order, "OrderId", "OrderId", orderticket.OrderId);
-            //ViewData["TicketId"] = new SelectList(_context.Ticket, "TicketId", "TicketId", orderticket.TicketId);
             return View(null);
         }
 

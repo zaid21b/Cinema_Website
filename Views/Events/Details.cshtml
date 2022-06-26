@@ -1,12 +1,13 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<CinemaWebsiteUser> SignInManager
-@inject UserManager<CinemaWebsiteUser> UserManager
-@model Cinema_Website.Models.Event
+﻿@model Cinema_Website.Models.Event
 
 @{
     ViewData["Title"] = "Details";
-
+    
 }
+<script>
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+</script>
 <hr />
 <head>
     <meta charset="UTF-8" />
@@ -42,17 +43,57 @@
 <hr />
 <div class="container">
     <div class="screen"></div>
+    <div class="card border-primary mb-3" style="max-width: 20rem; text-align: center; margin-left:400px; margin-bottom: 30px; margin-top: 30px; border-start-end-radius: 30px; border-end-start-radius: 30px ">
+
+        <div class="card-body">
+            <h4 class="card-title">cool</h4>
+
+        </div>
+    </div>
     <div class="row">
         @foreach (var item in Model.Tickets)
         {
-            if (item.IsSelected == false)
+            if (item.TicketType == Ticket.TicketTypes.cool)
             {
-                <a asp-controller="OrderTickets" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat"></a>
 
+                if (item.IsSold == false)
+                {
+                    <a onscroll="cool" asp-controller="OrderTickets" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat"></a>
+
+                }
+                else
+                {
+                    <a class="seat sold"></a>
+                }
             }
-            else
+        }
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="card border-primary mb-3" style="max-width: 20rem; text-align: center; margin-left:400px; margin-bottom: 30px; margin-top: 30px;border-start-end-radius:30px;border-end-start-radius:30px ">
+
+        <div class="card-body">
+            <h4 class="card-title">cool plus</h4>
+
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var item in Model.Tickets)
+        {
+            if (item.TicketType == Ticket.TicketTypes.coolplus)
             {
-                <a class="seat sold"></a>
+
+                if (item.IsSold == false)
+                {
+                    <a onscroll="cool" asp-controller="OrderTickets" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat"></a>
+
+                }
+                else
+                {
+                    <a class="seat sold"></a>
+                }
             }
         }
     </div>

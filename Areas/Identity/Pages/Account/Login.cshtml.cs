@@ -44,11 +44,11 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage ="Please Enter Your Email")]
+            [EmailAddress(ErrorMessage ="Invalid Email Address")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage ="Please Enter Your Password")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
@@ -119,7 +119,7 @@ namespace CinemaWebsite2.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "You Have Entered Wrong email or Wrong Password, Please Check and Login again");
                     return Page();
                 }
             }

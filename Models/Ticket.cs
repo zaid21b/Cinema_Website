@@ -9,11 +9,24 @@ namespace Cinema_Website.Models
 {
     public class Ticket
     {
+        public enum TicketTypes
+        {
+            [Display(Name = "cool plus")]
+            coolplus,
+            [Display(Name = "cool")]
+            cool,
+
+        }
+
         [Key]
         public int TicketId { get; set; }
         [Display(Name ="Ticket Price")]
         public double TicketPrice { get; set; }
         public bool IsSelected { get; set; }
+        public bool IsSold { get; set; }
+        [Display(Name = "Ticket Type")]
+        [Required(ErrorMessage = "The Ticket Type Is Required")]
+        public TicketTypes TicketType { get; set; }
         public int SeatNumber { get; set; }
         //FK
 

@@ -140,6 +140,22 @@ namespace Cinema_Website.Controllers
             return View(order);
         }
 
+        
+        public async Task<IActionResult> SetIsSold(int id)
+        {
+            var cart = await _context.tblOrders.Include(c => c.OrderTickets)
+            .ThenInclude(t => t.Ticket)
+            .FirstOrDefaultAsync(o => o.OrederId == id);
+            var tickets = cart.OrderTickets; foreach (var item in tickets)
+            {
+                item.Ticket.IsSold = true;
+            }
+            await _context.SaveChangesAsync();
+            return ((IActionResult)cart);
+        }
+
+
+
         [Authorize(Roles = "Admin")]
         // GET: Orders/Delete/5
         public async Task<IActionResult> Delete(int? id)
