@@ -41,6 +41,7 @@
                     <h2>@UserManager.GetUserAsync(User).Result.FirstName</h2>
                     <span>name</span>
                 </div>
+
                 <div class="seat">
                     <h2>@item.Ticket.Event.Hall.HallNumber</h2>
                     <span>Hall</span>
@@ -48,6 +49,10 @@
                 <div class="time">
                     <h2>@item.Ticket.Event.EventDateTime</h2>
                     <span>time</span>
+                </div>
+                <div class="seat">
+                    <h2>@item.Ticket.TicketType</h2>
+                    <span>Ticket Type</span>
                 </div>
 
 
@@ -59,7 +64,7 @@
                     <h3>@item.Ticket.SeatNumber</h3>
                     <span>seat</span>
                 </div>
-                <a style="margin-top:24px ;margin-left:24px ; color : white; width:60px ;height:18px " type="submit" value="Delete" class="badge bg-warning" asp-controller="OrderTickets" asp-action="Delete" asp-route-id="@item.OrderTicketId">Delete</a>
+                <a style="margin-top:24px ;margin-left:24px ; color : white; width:60px ;height:18px " type="submit" value="Delete" class="badge bg-primary" asp-controller="OrderTickets" asp-action="Delete" asp-route-id="@item.OrderTicketId">Delete</a>
             </div>
 
 
@@ -88,7 +93,7 @@
 <script>
 
 
-    document.body.style.lineHeight = 1.3;
+    document.body.style.lineHeight = 0.4;
 
 
 </script>

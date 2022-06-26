@@ -52,7 +52,7 @@ body {
     .seat.sold {
         background-color: #fff;
     }
-
+    
     
 
     .seat:not(.sold):hover {
