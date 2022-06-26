@@ -2,12 +2,8 @@
 
 @{
     ViewData["Title"] = "Details";
-    
+
 }
-<script>
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-</script>
 <hr />
 <head>
     <meta charset="UTF-8" />
@@ -36,6 +32,10 @@
         <small>Available</small>
     </li>
     <li>
+        <div class="seat selected"></div>
+        <small>Selected</small>
+    </li>
+    <li>
         <div class="seat sold"></div>
         <small>Sold</small>
     </li>
@@ -56,11 +56,21 @@
             if (item.TicketType == Ticket.TicketTypes.cool)
             {
 
+
+
                 if (item.IsSold == false)
                 {
-                    <a onscroll="cool" asp-controller="OrderTickets" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat"></a>
+                    if (item.IsSelected == true)
+                    {
+                        <a class="seat selected"></a>
+                    }
+                    else
+                    {
+                        <a onscroll="cool" asp-controller="OrderTickets" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat"></a>
+                    }
 
                 }
+
                 else
                 {
                     <a class="seat sold"></a>
@@ -87,8 +97,14 @@
 
                 if (item.IsSold == false)
                 {
-                    <a onscroll="cool" asp-controller="OrderTickets" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat"></a>
-
+                    if (item.IsSelected == true)
+                    {
+                        <a class="seat selected"></a>
+                    }
+                    else
+                    {
+                        <a onscroll="cool" asp-controller="OrderTickets" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat"></a>
+                    }
                 }
                 else
                 {
