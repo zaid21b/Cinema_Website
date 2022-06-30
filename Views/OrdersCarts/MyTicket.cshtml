@@ -1,0 +1,66 @@
+﻿@model Cinema_Website.Models.OrdersCart
+
+@{
+    ViewData["Title"] = "MyTicket";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/ticketstylesheet.css" />
+   
+</head>
+
+<div class="card border-primary mb-3" style="max-width: 20rem;margin-left:380px;margin-top:30px;text-align:center">
+    <div class="card-header text-light">My Tickets</div>
+</div>
+
+
+@foreach (var item in Model.OrderTickets)
+{
+    if (item.Ticket.IsSold == true)
+    {
+        <div class="cardWrap" style="line-height:0.4">
+            <div class="card1 cardLeft">
+                <h1>Z2A<span>Cinema</span></h1>
+                <div class="title">
+                    <h2>@item.Ticket.Event.Movie.MovieName</h2>
+                    <span>movie</span>
+                </div>
+                <div class="name">
+                    <h2>@UserManager.GetUserAsync(User).Result.FirstName</h2>
+                    <span>name</span>
+                </div>
+
+                <div class="seat">
+                    <h2>@item.Ticket.Event.Hall.HallNumber</h2>
+                    <span>Hall</span>
+                </div>
+                <div class="time">
+                    <h2>@item.Ticket.Event.EventDateTime</h2>
+                    <span>time</span>
+                </div>
+                <div class="seat">
+                    <h2>@item.Ticket.TicketType</h2>
+                    <span>Ticket Type</span>
+                </div>
+
+
+
+            </div>
+            <div class="card1 cardRight">
+                <div class="eye"></div>
+                <div class="number" style="margin-top:50px">
+                    <h3>@item.Ticket.SeatNumber</h3>
+                    <span>seat</span>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    }
+}
+
+
+
+

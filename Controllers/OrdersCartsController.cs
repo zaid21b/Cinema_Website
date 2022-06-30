@@ -36,6 +36,31 @@ namespace Cinema_Website.Controllers
             var OrdersCartId = int.Parse(_context.tblOrders.Where(c => c.UserId == userId).Select(o => o.OrederId).FirstOrDefault().ToString());
             return RedirectToAction("Details",new {id = OrdersCartId });
         }
+        public IActionResult PassData2()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var OrdersCartId = int.Parse(_context.tblOrders.Where(c => c.UserId == userId).Select(o => o.OrederId).FirstOrDefault().ToString());
+            return RedirectToAction("MyTicket", new { id = OrdersCartId });
+        }
+        public async Task<IActionResult> MyTicket(int? id)
+        {
+            var cart = await _context.tblOrders
+                .Include(ot => ot.OrderTickets)
+                .ThenInclude(t => t.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(m => m.Movie)
+                .Include(ot => ot.OrderTickets)
+                .ThenInclude(t => t.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(h => h.Hall)
+                .FirstOrDefaultAsync(oi => oi.OrederId == id);
+
+            return View("MyTicket",cart);
+
+
+        }
+
+
 
         // GET: Orders/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -146,14 +171,29 @@ namespace Cinema_Website.Controllers
             var cart = await _context.tblOrders.Include(c => c.OrderTickets)
             .ThenInclude(t => t.Ticket)
             .FirstOrDefaultAsync(o => o.OrederId == id);
-            var tickets = cart.OrderTickets; foreach (var item in tickets)
+            var tickets = cart.OrderTickets; 
+            foreach (var item in tickets)
             {
                 item.Ticket.IsSold = true;
             }
             await _context.SaveChangesAsync();
             return ((IActionResult)cart);
         }
+        public async Task<IActionResult> Checkout(int id)
+        {
+            var cart = await _context.tblOrders.Include(o => o.OrderTickets)
+                .ThenInclude(t => t.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(m => m.Movie)
+                .Include(o => o.OrderTickets)
+                .ThenInclude(t => t.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(h => h.Hall)
+                .FirstOrDefaultAsync(c => c.OrederId == id);
+            
+            return View("Checkout",cart);
 
+        }
 
 
         [Authorize(Roles = "Admin")]

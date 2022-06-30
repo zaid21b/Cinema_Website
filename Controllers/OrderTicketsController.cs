@@ -10,7 +10,7 @@ using Cinema_Website.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-
+using CinemaWebsite2.Controllers;
 namespace Cinema_Website.Controllers
 {
     public class OrderTicketsController : Controller
@@ -163,10 +163,14 @@ namespace Cinema_Website.Controllers
             }
 
             var orderticket = await _context.tblOrderTickets
-                .Include(o => o.Order)
+                 .Include(o => o.Order)
                 .Include(o => o.Ticket)
                 .ThenInclude(e => e.Event)
                 .ThenInclude(m => m.Movie)
+                .Include(o => o.Order)
+                .Include(o => o.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(h => h.Hall)
                 .FirstOrDefaultAsync(m => m.OrderTicketId == id);
             if (orderticket == null)
             {
@@ -200,6 +204,57 @@ namespace Cinema_Website.Controllers
                 return RedirectToAction(nameof(Details), "OrdersCarts", new { id = OrdersCartId });
             }
         }
+
+        public async Task<IActionResult> Delete2(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var orderticket = await _context.tblOrderTickets
+                .Include(o => o.Order)
+                .Include(o => o.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(m => m.Movie)
+                .Include(o => o.Order)
+                .Include(o => o.Ticket)
+                .ThenInclude(e => e.Event)
+                .ThenInclude(h => h.Hall)
+                
+                .FirstOrDefaultAsync(m => m.OrderTicketId == id);
+            if (orderticket == null)
+            {
+                return NotFound();
+            }
+
+            return View(orderticket);
+        }
+
+        [HttpPost, ActionName("Delete2")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete2Confirmed(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var OrdersCartId = int.Parse(_context.tblOrders.Where(c => c.UserId == userId).Select(o => o.OrederId).FirstOrDefault().ToString());
+
+
+            var orderticket = await _context.tblOrderTickets.FindAsync(id);
+            var ticket = await _context.tblTickets.FindAsync(orderticket.TicketId);
+            ticket.IsSelected = false;
+            _context.tblOrderTickets.Remove(orderticket);
+            await _context.SaveChangesAsync();
+            var userEmail = User.FindFirstValue(ClaimTypes.Email);
+            if (userEmail == "admin@gmail.com")
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction("Checkout", "OrdersCarts", new { id = OrdersCartId });
+            }
+        }
+
 
         private bool OrderTicketExists(int id)
         {
