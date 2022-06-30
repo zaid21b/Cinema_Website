@@ -22,7 +22,7 @@
     <div class="card border-primary mb-3" style="max-width: 20rem;margin-left:380px;margin-top:30px;text-align:center">
         <div class="card-header text-light">Cart</div>
     </div>
-    <hr />
+    
 
 
 
@@ -30,7 +30,7 @@
     @foreach (var item in Model.OrderTickets)
     {
 
-        <div class="cardWrap">
+        <div class="cardWrap" style="line-height:0.4">
             <div class="card1 cardLeft">
                 <h1>Z2A<span>Cinema</span></h1>
                 <div class="title">
@@ -90,77 +90,11 @@
 
 
 </body>
-<script>
 
-
-    document.body.style.lineHeight = 0.4;
-
-
-</script>
 
 @{ 
     priceindollar = buynowprice * 1.41;
 }
 
-<div id="smart-button-container">
-    <div style="text-align: center;">
-        <div id="paypal-button-container"></div>
-    </div>
-</div>
-<script src="https://www.paypal.com/sdk/js?client-id=AZeCuz-kuZ237yIbbHZIZBFoSeQUu71Pnptsmf56jlmIrHINtr8-JoSQCXo47tK4J8ChuPQSdQjfjpuq&enable-funding=venmo&currency=USD&disable-funding=credit,card&locale=en_JO" data-sdk-integration-source="button-factory"></script>
-<script>
-    function initPayPalButton() {
-        paypal.Buttons({
-
-            style: {
-
-                shape: 'pill',
-                color: 'gold',
-                layout: 'vertical',
-                label: 'buynow',
-
-            },
-
-            createOrder: function (data, actions) {
-                return actions.order.create({
-                    purchase_units: [{ "amount": { "currency_code": "USD", "value": @priceindollar } }]
-                });
-            },
-
-            onApprove: function (data, actions) {
-                return actions.order.capture().then(function (orderData) {
-
-                    $.ajax({
-                        url: "/OrdersCarts/SetIsSold",
-                        type: "post",
-                        data: { id:@Model.OrederId}
-                    })
-
-
-                    // Full available details
-                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-
-                    // Show a success message within this page, e.g.
-                    const element = document.getElementById('paypal-button-container');
-                    element.innerHTML = '';
-                    element.innerHTML = '<h3>Thank you for your payment!</h3>';
-
-                    // Or go to another URL:  actions.redirect('thank_you.html');
-                    return "redirect:/Movies";
-
-
-
-
-                });
-            },
-
-            onError: function (err) {
-                console.log(err);
-
-            }
-        }).render('#paypal-button-container');
-    }
-    initPayPalButton();
-</script>
-
+<a class="badge bg-primary" asp-controller="OrdersCarts" asp-action="Checkout" asp-route-id="@Model.OrederId">Checkout</a>
 

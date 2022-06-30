@@ -1,7 +1,7 @@
 ﻿@model Cinema_Website.Models.OrderTicket
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Delete2";
 }
 
 <head>
@@ -46,13 +46,13 @@
             <div class="number">
                 <h3>@Model.Ticket.SeatNumber</h3>
                 <span>seat</span>
-
+           
             </div>
 
+            </div>
         </div>
-    </div>
 
-    <form asp-action="Delete">
+    <form asp-action="Delete2">
         <input type="hidden" asp-for="OrderTicketId" />
         <input type="submit" value="Delete" class="btn btn-danger" />
         @if (SignInManager.IsSignedIn(User))
