@@ -50,16 +50,16 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="OrderTicketId" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
+        <input type="submit" value="Delete" class="btn btn-primary" />
         @if (SignInManager.IsSignedIn(User))
         {
             if (UserManager.GetUserAsync(User).Result.Email == "admin@gmail.com")
             {
-                <a asp-controller="OrderTickets" asp-action="Index" class="btn btn-danger">Back</a>
+                <a asp-controller="OrderTickets" asp-action="Index" class="btn btn-primary">Back</a>
             }
             else
             {
-                <a asp-controller="OrdersCarts" asp-action="Details" asp-route-id="@Model.Order.OrederId" class="btn btn-danger">Back</a>
+                <a asp-controller="OrdersCarts" asp-action="Details" asp-route-id="@Model.Order.OrederId" class="btn btn-primary">Back</a>
             }
         }
     </form>
