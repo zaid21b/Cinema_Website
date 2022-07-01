@@ -16,12 +16,10 @@ namespace Cinema_Website.Controllers
     public class OrderTicketsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly UserManager<CinemaWebsiteUser> _userManager;
 
-        public OrderTicketsController(ApplicationDbContext context, UserManager<CinemaWebsiteUser> userManager)
+        public OrderTicketsController(ApplicationDbContext context)
         {
             _context = context;
-            _userManager = userManager;
         }
 
         [Authorize(Roles = "Admin")]
@@ -76,6 +74,7 @@ namespace Cinema_Website.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
+        [Authorize(Roles ="Customer")]
         public async Task<IActionResult> Create(int TicketId, int EventId)
         {
             if (ModelState.IsValid)
@@ -194,8 +193,7 @@ namespace Cinema_Website.Controllers
             ticket.IsSelected = false;
             _context.tblOrderTickets.Remove(orderticket);
             await _context.SaveChangesAsync();
-            var userEmail = User.FindFirstValue(ClaimTypes.Email);
-            if (userEmail == "admin@gmail.com")
+            if (User.IsInRole("Admin"))
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -244,8 +242,7 @@ namespace Cinema_Website.Controllers
             ticket.IsSelected = false;
             _context.tblOrderTickets.Remove(orderticket);
             await _context.SaveChangesAsync();
-            var userEmail = User.FindFirstValue(ClaimTypes.Email);
-            if (userEmail == "admin@gmail.com")
+            if (User.IsInRole("Admin"))
             {
                 return RedirectToAction(nameof(Index));
             }

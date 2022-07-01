@@ -195,7 +195,7 @@
                 <br />
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    if (UserManager.GetUserAsync(User).Result.Email == "admin@gmail.com")
+                    if (User.IsInRole("Admin"))
                     {
 
                         <h1 class="text-md-center">Admin Control</h1>

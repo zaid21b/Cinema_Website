@@ -57,7 +57,7 @@
         <input type="submit" value="Delete" class="btn btn-primary" />
         @if (SignInManager.IsSignedIn(User))
         {
-            if (UserManager.GetUserAsync(User).Result.Email == "admin@gmail.com")
+            if (User.IsInRole("Admin"))
             {
                 <a asp-controller="OrderTickets" asp-action="Index" class="btn btn-primary">Back</a>
             }

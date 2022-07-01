@@ -29,7 +29,7 @@
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            if (UserManager.GetUserAsync(User).Result.Email == "admin@gmail.com")
+                            if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link active" asp-controller="UserRoles" asp-action="Index">Manage User Roles</a>
@@ -46,7 +46,7 @@
 
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            if (UserManager.GetUserAsync(User).Result.Email != "admin@gmail.com")
+                            if (User.IsInRole("Customer"))
                             {
 
                                 <li class="nav-item">

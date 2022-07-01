@@ -62,7 +62,7 @@
                 {
                     if (item.IsSelected == true)
                     {
-                        <a class="seat selected"></a>
+                        <a asp-controller="OrderTickets" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat selected"></a>
                     }
                     else
                     {
@@ -99,7 +99,7 @@
                 {
                     if (item.IsSelected == true)
                     {
-                        <a class="seat selected"></a>
+                        <a asp-controller="OrderTickets" asp-action="Create" asp-route-EventId="@item.EventId" asp-route-TicketId="@item.TicketId" class="seat selected"></a>
                     }
                     else
                     {

@@ -87,7 +87,7 @@
                 -->
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    if (UserManager.GetUserAsync(User).Result.Email == "admin@gmail.com")
+                    if (User.IsInRole("Admin"))
                     {
                         <div class="banner">
                             <a asp-action="Create" class="btn btn-primary">Add New Movie</a>
@@ -97,7 +97,7 @@
             <div class="movies-grid">
                 @foreach (var item in Model)
                 {
-                    if (((int)item.SH) == 0)
+                    if (item.SH == Movie.Showing.Showing_Now)
                     {
 
 
@@ -150,7 +150,7 @@
 
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    if (UserManager.GetUserAsync(User).Result.Email == "admin@gmail.com")
+                    if (User.IsInRole("Admin"))
                     {
                         <div class="banner">
                             <a asp-action="Create" class="btn btn-primary">Add New Movie</a>

@@ -36,7 +36,7 @@ namespace Cinema_Website.Controllers
 
         [Authorize(Roles = "Customer,Admin")]
         // GET: Events/Details/5
-        public async Task<IActionResult> Details(double TotalPrice,int NumOfSelectedTickets, int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewData["OrderId"] = int.Parse(_context.tblOrders.Where(c => c.UserId == userId).Select(o => o.OrederId).FirstOrDefault().ToString());
