@@ -50,4 +50,5 @@ iframe {
 
 .nav-link.btn.btn-link.active {
     font-size: 1.5rem;
+    line-height: 2.5;
 }
