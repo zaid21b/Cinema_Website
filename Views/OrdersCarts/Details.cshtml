@@ -6,8 +6,6 @@
     ViewData["Title"] = "Details";
     int NumOfSeats = 0;
     double TotalCost = 0.0;
-    double buynowprice = 0.0;
-    double priceindollar = 0.0;
 }
 
 <head>
@@ -30,7 +28,8 @@
 
     @foreach (var item in Model.OrderTickets)
     {
-
+        if (item.Ticket.IsSold == false)
+        {
         <div class="cardWrap" style="line-height:0.4">
             <div class="card1 cardLeft">
                 <h1>Z2A<span>Cinema</span></h1>
@@ -71,21 +70,16 @@
 
 
         </div>
-        if(item.Ticket.IsSold == false)
-        {
-            buynowprice += item.Ticket.TicketPrice;
+            NumOfSeats = NumOfSeats + 1;
+            TotalCost = TotalCost + item.Ticket.TicketPrice;
         }
-
-
-        NumOfSeats = NumOfSeats + 1;
-        TotalCost = TotalCost + item.Ticket.TicketPrice;
     }
 
 <div class="card border-primary mb-3" style="max-width: 50rem; margin-left:160px">
     <div class="card-header">receipt</div>
     <div class="card-body">
 
-        <h2 class="card-text text-light">you have selectet <span> @NumOfSeats</span> seat <br />for a price of <span> @TotalCost</span> jd <span><br />the buy now price is <span>@buynowprice</span> JD </span></h2>
+        <h2 class="card-text text-light">you have selectet <span> @NumOfSeats</span> seat <br />for a price of <span> @TotalCost</span> Jd</h2>
     </div>
 </div>
 
