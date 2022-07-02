@@ -12,6 +12,7 @@
 
 <head>
     <link rel="stylesheet" href="~/css/ticketstylesheet.css" />
+    <link rel="stylesheet" href="~/css/StyleSheet1.css" />
 </head>
 
 
@@ -88,11 +89,13 @@
     </div>
 </div>
 
+<div class="col-md-12 col-sm-12 col-xs-12 text-center">
+    <a class="btn-lg btn-primary" asp-controller="OrdersCarts" asp-action="Checkout" asp-route-id="@Model.OrederId">Checkout</a>
 
+</div>
 </body>
 
 
 
 
-<a class="badge bg-primary" asp-controller="OrdersCarts" asp-action="Checkout" asp-route-id="@Model.OrederId">Checkout</a>
 
